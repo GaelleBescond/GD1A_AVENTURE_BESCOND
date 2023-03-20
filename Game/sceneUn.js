@@ -4,7 +4,9 @@ class sceneUn extends Phaser.Scene {
     }
 
     init(data) {
-        this.experience = data.xp;
+        this.resource_chocolat = data.choc;
+        this.resource_caramel = data.cara;
+        this.resource_berlingot = data.berlin;
     }
 
     preload() {
@@ -13,19 +15,33 @@ class sceneUn extends Phaser.Scene {
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
         this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
+
+        // chargement tuiles de jeu
+        this.load.image("Phaser_tuilesdejeu", "assets/Map.png");
+        // chargement de la carte
+        this.load.tilemapTiledJSON("carte", "assets/TestCode1.json");
     }
 
     create() {
+
+
+        // chargement de la carte
+        const carteDuNiveau = this.add.tilemap("carte");
+        // chargement du jeu de tuiles
+        const tileset = carteDuNiveau.addTilesetImage("tuiles_de_jeu", "Phaser_tuilesdejeu");
+
         this.score = 0;
         this.gameover = false;
         this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(50, 250, 'ground');
-        this.platforms.create(750, 220, 'ground');
 
         this.player = this.physics.add.sprite(100, 450, 'perso');
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, this.platforms);
-        this.scoreText = this.add.text(16, 16, 'experience: '+ this.experience, { fontSize: '32px', fill: '#FFF' });
+        this.scoreText = this.add.text(16, 16, 'Chocolats: ' + this.chocolat, { fontSize: '32px', fill: '#FFF' });
+        this.scoreText = this.add.text(16, 16, 'Caramels: ' + this.caramel, { fontSize: '32px', fill: '#FFF' });
+        this.scoreText = this.add.text(16, 16, 'Berlingots: ' + this.berlingot, { fontSize: '32px', fill: '#FFF' });
+
+
         this.scoreText = this.add.text(16, 64, 'Scene Un', { fontSize: '32px', fill: '#FFF' });
         //affiche un texte à l’écran, pour le score
         this.stars = this.physics.add.group({
@@ -53,7 +69,10 @@ class sceneUn extends Phaser.Scene {
         else { this.player.setVelocityY(0); }
     }
     collectStar(player, star) {
-        this.experience = this.experience + 1
-        this.scene.start("sceneDeux",{xp: this.experience})
+        this.scene.start("sceneDeux", {
+            choc: this.resource_chocolat,
+            cara: this.resource_caramel,
+            berlin: this.resource_berlingot
+        })
     }
 }
