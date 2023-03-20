@@ -1,6 +1,6 @@
-class sceneUn extends Phaser.Scene {
+class sceneChocolate extends Phaser.Scene {
     constructor() {
-        super("sceneUn");
+        super("sceneChocolate");
     }
 
     init(data) {
@@ -10,10 +10,8 @@ class sceneUn extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('sky', 'assets/sky.png');
-        this.load.image('ground', 'assets/platform.png');
-        this.load.image('star', 'assets/star.png');
-        this.load.image('bomb', 'assets/bomb.png');
+        
+        this.load.image('door', 'assets/star.png');
         this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
 
         // chargement tuiles de jeu
@@ -24,31 +22,28 @@ class sceneUn extends Phaser.Scene {
 
     create() {
 
-
         // chargement de la carte
         const carteDuNiveau = this.add.tilemap("carte");
         // chargement du jeu de tuiles
         const tileset = carteDuNiveau.addTilesetImage("tuiles_de_jeu", "Phaser_tuilesdejeu");
 
-        this.score = 0;
         this.gameover = false;
-        this.platforms = this.physics.add.staticGroup();
+        this.location = 1;
 
         this.player = this.physics.add.sprite(100, 450, 'perso');
         this.player.setCollideWorldBounds(true);
-        this.physics.add.collider(this.player, this.platforms);
         this.scoreText = this.add.text(16, 16, 'Chocolats: ' + this.chocolat, { fontSize: '32px', fill: '#FFF' });
-        this.scoreText = this.add.text(16, 16, 'Caramels: ' + this.caramel, { fontSize: '32px', fill: '#FFF' });
-        this.scoreText = this.add.text(16, 16, 'Berlingots: ' + this.berlingot, { fontSize: '32px', fill: '#FFF' });
+        this.scoreText = this.add.text(16, 48, 'Caramels: ' + this.caramel, { fontSize: '32px', fill: '#FFF' });
+        this.scoreText = this.add.text(16, 86, 'Berlingots: ' + this.berlingot, { fontSize: '32px', fill: '#FFF' });
 
 
         this.scoreText = this.add.text(16, 64, 'Scene Un', { fontSize: '32px', fill: '#FFF' });
         //affiche un texte à l’écran, pour le score
-        this.stars = this.physics.add.group({
-            key: 'star',
+        this.door = this.physics.add.group({
+            key: 'door',
             setXY: { x: 420, y: 360, stepX: 70 }
         });
-        this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
+        this.physics.add.overlap(this.player, this.door, this.openDoor, null, this);
     }
     update() {
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -68,8 +63,8 @@ class sceneUn extends Phaser.Scene {
         }
         else { this.player.setVelocityY(0); }
     }
-    collectStar(player, star) {
-        this.scene.start("sceneDeux", {
+    openDoor(player, door) {
+        this.scene.start("sceneMap", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
             berlin: this.resource_berlingot

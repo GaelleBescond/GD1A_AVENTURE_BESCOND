@@ -1,14 +1,16 @@
-class sceneDeux extends Phaser.Scene {
+class sceneMap extends Phaser.Scene {
     constructor() {
-        super("sceneDeux");
+        super("sceneMap");
     }
 
     init(data) {
-        this.experience = data.xp;
+        this.resource_chocolat = data.choc;
+        this.resource_caramel = data.cara;
+        this.resource_berlingot = data.berlin;
+
     }
 
     preload() {
-        this.load.image('sky', 'assets/sky.png');
         this.load.image('ground', 'assets/platform.png');
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
@@ -18,15 +20,12 @@ class sceneDeux extends Phaser.Scene {
     create() {
         this.score = 0;
         this.gameover = false;
-        this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(300, 50, 'ground');
-        this.platforms.create(750, 220, 'ground');
 
         this.player = this.physics.add.sprite(100, 450, 'perso');
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, this.platforms);
         this.scoreText = this.add.text(16, 16, 'experience: ' + this.experience, { fontSize: '32px', fill: '#FFF' });
-        this.scoreText = this.add.text(16, 64, 'Scene Deux', { fontSize: '32px', fill: '#FFF' });
+        this.scoreText = this.add.text(16, 64, 'World Map', { fontSize: '32px', fill: '#FFF' });
         //affiche un texte à l’écran, pour le score
         this.stars = this.physics.add.group({
             key: 'star',
@@ -53,7 +52,12 @@ class sceneDeux extends Phaser.Scene {
         else { this.player.setVelocityY(0); }
     }
     collectStar(player, star) {
-        this.experience = this.experience + 1
-        this.scene.start("sceneUn",{xp: this.experience})
+        this.scene.start("sceneShop", {
+            xp: this.experience,
+            choc: this.resource_chocolat,
+            cara: this.resource_caramel,
+            berlin: this.resource_berlingot
+        })
+
     }
 }
