@@ -1,0 +1,87 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Map 1.tmx": {
+            "scale": 0.8945833333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.11178388449014,
+                "y": 480.67070330693997
+            }
+        },
+        "Map 1.tmx#Map": {
+            "scaleInDock": 1
+        },
+        "Map 2.tmx": {
+            "scale": 0.8945833333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.11178388449014,
+                "y": 480.67070330693997
+            }
+        },
+        "Map 2.tmx#Map": {
+            "scaleInDock": 1
+        },
+        "Map/01_Boutique/01_Boutique.tmx": {
+            "scale": 1.341875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.29809035864,
+                "y": 320.44713553796
+            }
+        },
+        "Map/01_Boutique/01_Boutique.tmx#Map": {
+            "scaleInDock": 1
+        },
+        "Map/01_Boutique/01_Boutique_01.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 955.9999999999999,
+                "y": 176
+            }
+        },
+        "Map/01_Boutique/01_Boutique_01.tmx#Map": {
+            "scaleInDock": 1
+        },
+        "Map/01_Boutique/01_Boutique_02.tmx": {
+            "scale": 1.341875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 477.68979972054035,
+                "y": 415.83605030274805
+            }
+        },
+        "Map/01_Boutique/01_Boutique_02.tmx#Map": {
+            "scaleInDock": 1
+        },
+        "Map/GlobalMap.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 228,
+                "y": 1276
+            }
+        }
+    },
+    "last.imagePath": "G:/ETPA/Zelda like",
+    "map.fixedSize": false,
+    "map.height": 20,
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+    ],
+    "project": "ProjectZelda.tiled-project",
+    "recentFiles": [
+        "Map/01_Boutique/01_Boutique.tmx",
+        "Map 2.tmx",
+        "Map 1.tmx"
+    ],
+    "tileset.embedInMap": true
+}
