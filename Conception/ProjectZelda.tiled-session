@@ -82,11 +82,11 @@
             "scaleInDock": 1
         },
         "Map/Chocolate.tmx": {
-            "scale": 0.9336718749999999,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 480.3614760271107,
-                "y": 188.50305413772907
+                "x": 722,
+                "y": 482
             }
         },
         "Map/Chocolate.tmx#Map": {
