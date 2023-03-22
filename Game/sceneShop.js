@@ -22,6 +22,7 @@ class sceneShop extends Phaser.Scene {
 
     create() {
 
+        
         // chargement de la carte
         const carteDuNiveau = this.add.tilemap("carte");
         // chargement du jeu de tuiles
