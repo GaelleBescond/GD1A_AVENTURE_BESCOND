@@ -7,37 +7,23 @@ class sceneChocolate extends Phaser.Scene {
         this.resource_chocolat = data.choc;
         this.resource_caramel = data.cara;
         this.resource_berlingot = data.berlin;
+        this.spawn = data.spawn;
     }
 
-    preload() {
-        
-        this.load.image('door', 'assets/star.png');
-        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
-
-        // chargement tuiles de jeu
-        this.load.image("Phaser_tuilesdejeu", "assets/Map.png");
-        // chargement de la carte
-        this.load.tilemapTiledJSON("carte", "assets/TestCode1.json");
-    }
+    preload() { }
 
     create() {
-
         // chargement de la carte
         const carteDuNiveau = this.add.tilemap("carte");
         // chargement du jeu de tuiles
         const tileset = carteDuNiveau.addTilesetImage("tuiles_de_jeu", "Phaser_tuilesdejeu");
-
         this.gameover = false;
-        this.location = 1;
-
         this.player = this.physics.add.sprite(100, 450, 'perso');
         this.player.setCollideWorldBounds(true);
         this.scoreText = this.add.text(16, 16, 'Chocolats: ' + this.chocolat, { fontSize: '32px', fill: '#FFF' });
         this.scoreText = this.add.text(16, 48, 'Caramels: ' + this.caramel, { fontSize: '32px', fill: '#FFF' });
         this.scoreText = this.add.text(16, 86, 'Berlingots: ' + this.berlingot, { fontSize: '32px', fill: '#FFF' });
-
-
-        this.scoreText = this.add.text(16, 64, 'Scene Un', { fontSize: '32px', fill: '#FFF' });
+        this.scoreText = this.add.text(16, 64, 'Chocolat', { fontSize: '32px', fill: '#FFF' });
         //affiche un texte à l’écran, pour le score
         this.door = this.physics.add.group({
             key: 'door',
@@ -64,10 +50,12 @@ class sceneChocolate extends Phaser.Scene {
         else { this.player.setVelocityY(0); }
     }
     openDoor(player, door) {
+        this.spawn = "chocolate";
         this.scene.start("sceneMap", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
-            berlin: this.resource_berlingot
+            berlin: this.resource_berlingot,
+            spawn: this.spawn
         })
     }
 }
