@@ -11,7 +11,7 @@ class sceneShop extends Phaser.Scene {
         this.spawn = data.spawn;
     }
 
-    preload() { 
+    preload() {
     }
 
     create() {

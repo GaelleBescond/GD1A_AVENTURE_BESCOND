@@ -3,12 +3,12 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Map/GlobalMap.tmx",
+    "activeFile": "Map/Lollipop.tmx",
     "expandedProjectPaths": [
+        "Map",
         "TestCode",
-        "Map/01_Boutique",
         ".",
-        "Map"
+        "Map/01_Boutique"
     ],
     "fileStates": {
         "": {
@@ -102,6 +102,9 @@
         "Map/Caramel.tmx#Cara": {
             "scaleInDock": 1
         },
+        "Map/Caramel.tmx#Lolli": {
+            "scaleInDock": 1
+        },
         "Map/Caramel.tmx#Map": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -186,17 +189,20 @@
     "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "Map/GlobalMap.tmx",
-        "Map/Shop.tmx"
+        "Map/Shop.tmx",
+        "Map/Lollipop.tmx",
+        "Map/Chocolate.tmx",
+        "Map/Caramel.tmx",
+        "Map/GlobalMap.tmx"
     ],
     "project": "ProjectZelda.tiled-project",
     "property.type": "bool",
     "recentFiles": [
         "Map/Shop.tmx",
         "Map/GlobalMap.tmx",
-        "Map/Lollipop.tmx",
-        "Map/Chocolate.tmx",
         "Map/Caramel.tmx",
+        "Map/Chocolate.tmx",
+        "Map/Lollipop.tmx",
         "Map/01_Boutique/01_Boutique_01.tmx",
         "Map/01_Boutique/01_Boutique.tmx",
         "Map 2.tmx",

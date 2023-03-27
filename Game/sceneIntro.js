@@ -4,7 +4,7 @@ class sceneIntro extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'assets/sky.png');//Ecran d'accueil, splash art
+        this.load.image('splash', 'assets/splash.png');//Ecran d'accueil, splash art
         //assets
         this.load.image('door', 'assets/door.png');
         this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });// chargement tuiles de jeu
@@ -32,7 +32,7 @@ class sceneIntro extends Phaser.Scene {
         this.player_hp = 4;
 
         //chargement du background        
-        this.add.image(500, 500, "background");
+        this.add.image(500, 500, "splash");
 
         this.Text = this.add.text(16, 64, 'Press Down arrow to begin', { fontSize: '32px', fill: '#FFF' });
         //affiche un texte à l’écran en attendant le splash art

@@ -72,16 +72,25 @@ class sceneMap extends Phaser.Scene {
         this.porte_blocked.objects.forEach(porte_blocked => {
             this.doorSpawn = this.porteBlocked.create(porte_blocked.x + 16, porte_blocked.y + 16, "door").body.setAllowGravity(false);
         });
-        this.physics.add.overlap(this.porteBlocked, this.player, this.pathBlocked, null, this);
-
-        this.scoreText = this.add.text(16, 64, 'World Map', { fontSize: '32px', fill: '#FFF' });
+        this.physics.add.overlap(this.porteBlocked, this.player, this.pathBlocked, null, this)
+        //loading ugly UI
+        this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreLolli = this.add.text(820, 48, 'Berlingots: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreMap = this.add.text(500, 32, 'World Map', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreThoughts = this.add.text(16, 64, this.thoughts, { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
         //  ajout du champs de la caméra de taille identique à celle du monde
         this.cameras.main.setBounds(-80 * 32, 0, 111 * 32 * 2, 207 * 32);
         // ancrage de la caméra sur le joueur
         this.cameras.main.startFollow(this.player);
-        this.cameras.main.setZoom(0.5);
+        this.cameras.main.setZoom(1);
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.scoreThoughts = this.add.text(16, 64, this.thoughts, { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+
+
+
+
+
 
     }
     update() {
@@ -103,18 +112,17 @@ class sceneMap extends Phaser.Scene {
     }
 
     pathBlocked() {
-        this.thoughts = "This door is blocked"
+        this.thoughts = "This door is blocked";
+        this.scoreThoughts.setText(this.thoughts);
         this.scoreThoughts.visible = true;
-        this.time.delayedCall(1000, this.clearThoughts, [], this);
-
+        this.time.delayedCall(1, this.clearThoughts, [], this)
     }
 
     clearThoughts() {
-        console.log('clear');
         this.scoreThoughts.visible = false;
     }
 
-    toShop(porteShop, player) {
+    toShop() {
         this.spawn = "map";
         this.scene.start("sceneShop", {
             choc: this.resource_chocolat,
@@ -125,7 +133,7 @@ class sceneMap extends Phaser.Scene {
 
     }
 
-    toChoc(porteChoc, player) {
+    toChoc() {
         this.spawn = "map";
         this.scene.start("sceneChocolate", {
             choc: this.resource_chocolat,
@@ -136,7 +144,7 @@ class sceneMap extends Phaser.Scene {
         })
 
     }
-    toCara(porteCara, player) {
+    toCara() {
         this.spawn = "map";
         this.scene.start("sceneCaramel", {
             choc: this.resource_chocolat,
@@ -146,7 +154,7 @@ class sceneMap extends Phaser.Scene {
         })
 
     }
-    toLolli(porteLolli, player) {
+    toLolli() {
         this.spawn = "map";
         this.scene.start("sceneLollipop", {
             choc: this.resource_chocolat,
