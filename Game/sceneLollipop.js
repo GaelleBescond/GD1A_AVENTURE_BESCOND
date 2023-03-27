@@ -7,45 +7,69 @@ class sceneLollipop extends Phaser.Scene {
         this.resource_chocolat = data.choc;
         this.resource_caramel = data.cara;
         this.resource_berlingot = data.berlin;
+        this.player_hp = data.hp;
         this.spawn = data.spawn;
     }
 
     preload() { }
 
     create() {
+        this.spawn_x = 16 * 32;
+        this.spawn_y = 3 * 32;
+
         // chargement de la carte
-        const carteDuNiveau = this.add.tilemap("carte");
+        this.carteDuNiveau = this.add.tilemap("Lolli");
         // chargement du jeu de tuiles
-        const tileset = carteDuNiveau.addTilesetImage("tuiles_de_jeu", "Phaser_tuilesdejeu");
-        this.gameover = false;
-        this.player = this.physics.add.sprite(100, 450, 'perso');
-        this.player.setCollideWorldBounds(true);
-        this.scoreText = this.add.text(16, 16, 'Chocolats: ' + this.chocolat, { fontSize: '32px', fill: '#FFF' });
-        this.scoreText = this.add.text(16, 48, 'Caramels: ' + this.caramel, { fontSize: '32px', fill: '#FFF' });
-        this.scoreText = this.add.text(16, 86, 'Berlingots: ' + this.berlingot, { fontSize: '32px', fill: '#FFF' });
-        this.scoreText = this.add.text(16, 64, 'Lollipop', { fontSize: '32px', fill: '#FFF' });
-        //affiche un texte à l’écran, pour le score
-        this.door = this.physics.add.group({
-            key: 'door',
-            setXY: { x: 420, y: 360, stepX: 70 }
+        this.tileset = this.carteDuNiveau.addTilesetImage("Lolli", "Phaser_tuilesdejeu");
+
+        // chargement du calque calque_terrain
+        this.calque_terrain = this.carteDuNiveau.createLayer("ground", this.tileset);
+        // chargement du calque calque_obstacles
+        this.calque_obstacles = this.carteDuNiveau.createLayer("obstacles", this.tileset);
+        this.calque_obstacles.setCollisionByProperty({ estSolide: true });
+        //loading player
+        this.player = this.physics.add.sprite(this.spawn_x, this.spawn_y, 'perso');
+        // chargement du calque calque_lumiere
+        this.calque_lumieres = this.carteDuNiveau.createLayer("lights", this.tileset);
+        this.physics.add.collider(this.player, this.calque_obstacles);
+
+        //loading ugly UI
+        this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreLolli = this.add.text(820, 48, 'Berlingots: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreMap = this.add.text(500, 32, 'Lollipop factory', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+
+        //  ajout du champs de la caméra de taille identique à celle du monde
+        // this.cameras.main.setBounds(0, 0, 30 * 32, 60 * 32);
+        // ancrage de la caméra sur le joueur
+        this.cameras.main.startFollow(this.player);
+
+        this.porteMap = this.physics.add.group({
+            key: 'door'
         });
-        this.physics.add.overlap(this.player, this.door, this.openDoor, null, this);
+        this.porte_map = this.carteDuNiveau.getObjectLayer("porte");
+        this.porte_map.objects.forEach(porte_map => {
+            const doorSpawn = this.porteMap.create(porte_map.x + 16, porte_map.y + 16, "door");
+        });
+        this.physics.add.overlap(this.player, this.porteMap, this.openDoor, null, this);
+
+        this.cursors = this.input.keyboard.createCursorKeys();
     }
     update() {
-        this.cursors = this.input.keyboard.createCursorKeys();
         if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-260);
+            this.player.setVelocityX(-360);
         }
         else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(260);
+            this.player.setVelocityX(360);
         }
         else { this.player.setVelocityX(0); }
 
         if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-260);
+            this.player.setVelocityY(-360);
         }
         else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(260);
+            this.player.setVelocityY(360);
         }
         else { this.player.setVelocityY(0); }
     }
@@ -55,6 +79,7 @@ class sceneLollipop extends Phaser.Scene {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
             berlin: this.resource_berlingot,
+            hp: this.player_hp,
             spawn: this.spawn
         })
     }

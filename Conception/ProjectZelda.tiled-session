@@ -24,6 +24,15 @@
         "D:/JV1A/Bescond Gaelle/ZeldaLike/Game/assets/tuilesJeu.xml": {
             "scaleInDock": 1
         },
+        "E:/Github/ZeldaLike/Game/assets/Lolli.tsj": {
+            "scaleInDock": 1
+        },
+        "E:/Github/ZeldaLike/Game/assets/Shop.tsx": {
+            "scaleInDock": 1
+        },
+        "E:/Github/ZeldaLike/Game/assets/tileSet.tsx": {
+            "scaleInDock": 1
+        },
         "Map 1.tmx": {
             "scale": 0.8945833333333333,
             "selectedLayer": 0,
@@ -80,24 +89,36 @@
             "scaleInDock": 1
         },
         "Map/Caramel.tmx": {
-            "scale": 0.9336718749999999,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 480.3614760271107,
-                "y": 466.9734750230106
+                "x": 303,
+                "y": 202
             }
+        },
+        "Map/Caramel.tmx#Cara": {
+            "scaleInDock": 1
         },
         "Map/Caramel.tmx#Map": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "Map/Chocolate.tmx": {
-            "scale": 0.25,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": -430,
-                "y": -468
+                "x": -17,
+                "y": -68
             }
+        },
+        "Map/Chocolate.tmx#Choco": {
+            "scaleInDock": 1
         },
         "Map/Chocolate.tmx#Map": {
             "scaleInDock": 1,
@@ -105,20 +126,17 @@
         },
         "Map/GlobalMap.tmx": {
             "expandedObjectLayers": [
-                15,
-                16,
-                14,
-                13,
-                12,
+                9,
                 11,
                 10,
-                9
+                13,
+                12
             ],
-            "scale": 0.25,
-            "selectedLayer": 5,
+            "scale": 1,
+            "selectedLayer": -1,
             "viewCenter": {
-                "x": -454,
-                "y": 376
+                "x": -2416.5,
+                "y": 5959
             }
         },
         "Map/GlobalMap.tmx#Map": {
@@ -126,35 +144,42 @@
             "scaleInEditor": 1
         },
         "Map/Lollipop.tmx": {
-            "scale": 0.9336718749999999,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.75,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 480.3614760271107,
-                "y": 234.55777759183334
+                "x": 542,
+                "y": 434.6666666666666
             }
+        },
+        "Map/Lollipop.tmx#Lolli": {
+            "scaleInDock": 1
         },
         "Map/Lollipop.tmx#Map": {
             "scaleInDock": 1
         },
         "Map/Shop.tmx": {
-            "expandedObjectLayers": [
-                3
-            ],
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 666,
-                "y": 1653.333333333333
+                "x": 550,
+                "y": 436
             }
         },
         "Map/Shop.tmx#Map": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "Map/Shop.tmx#Shop": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "E:/Github/ZeldaLike/Game/assets",
-    "last.externalTilesetPath": "D:/JV1A/Bescond Gaelle/ZeldaLike/Game/assets",
-    "last.imagePath": "D:/JV1A/Bescond Gaelle/ZeldaLike/Conception",
+    "last.externalTilesetPath": "E:/Github/ZeldaLike/Game/assets",
+    "last.imagePath": "E:/Github/ZeldaLike/Conception",
     "lastUsedTilesetExportFilter": "Fichiers de jeu de tuiles JSON (*.tsj *.json)",
     "map.fixedSize": false,
     "map.height": 20,
@@ -169,9 +194,9 @@
     "recentFiles": [
         "Map/Shop.tmx",
         "Map/GlobalMap.tmx",
+        "Map/Lollipop.tmx",
         "Map/Chocolate.tmx",
         "Map/Caramel.tmx",
-        "Map/Lollipop.tmx",
         "Map/01_Boutique/01_Boutique_01.tmx",
         "Map/01_Boutique/01_Boutique.tmx",
         "Map 2.tmx",
