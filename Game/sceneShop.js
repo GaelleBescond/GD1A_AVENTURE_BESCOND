@@ -14,6 +14,7 @@ class sceneShop extends Phaser.Scene {
     preload() {
     }
 
+
     create() {
         this.spawn_x = 15 * 32;
         this.spawn_y = 58 * 32;
@@ -33,9 +34,13 @@ class sceneShop extends Phaser.Scene {
         this.calque_obstacles.setCollisionByProperty({ estSolide: true });
         //loading player
         this.player = this.physics.add.sprite(this.spawn_x, this.spawn_y, 'perso');
+        this.physics.add.collider(this.player, this.calque_obstacles);       
         // chargement du calque calque_lumiere
         this.calque_lumieres = this.carteDuNiveau.createLayer("lights", this.tileset);
-        this.physics.add.collider(this.player, this.calque_obstacles);
+        //loading foreground
+        this.calque_foreground = this.carteDuNiveau.createLayer("foreground", this.tileset);
+        //loading diffuse light
+        this.calque_diffuse = this.carteDuNiveau.createLayer("diffuse", this.tileset);
 
         //loading ugly UI
         this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);

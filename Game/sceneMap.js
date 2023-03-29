@@ -13,7 +13,9 @@ class sceneMap extends Phaser.Scene {
 
     preload() { }
 
+
     create() {
+        this.cameraZoom = 0.5;
         this.thoughts = " ";
         //player spawn depending on the previous scene
         if (this.spawn == "shop") {
@@ -84,7 +86,7 @@ class sceneMap extends Phaser.Scene {
         this.cameras.main.setBounds(-80 * 32, 0, 111 * 32 * 2, 207 * 32);
         // ancrage de la caméra sur le joueur
         this.cameras.main.startFollow(this.player);
-        this.cameras.main.setZoom(1);
+        this.cameras.main.setZoom(this.cameraZoom);
         this.cursors = this.input.keyboard.createCursorKeys();
 
 

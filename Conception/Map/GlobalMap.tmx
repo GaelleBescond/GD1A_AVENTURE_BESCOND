@@ -4,7 +4,7 @@
   <export target="../../Game/GlobalMap.tmj" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Map" tilewidth="32" tileheight="32" tilecount="2500" columns="50">
-  <image source="../Map.png" width="1600" height="1600"/>
+  <image source="../../Game/assets/Map.png" width="1600" height="1600"/>
   <tile id="0">
    <properties>
     <property name="estSolide" type="bool" value="true"/>

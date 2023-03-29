@@ -4,7 +4,7 @@
   <export target="../../Game/assets/Lollipop.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Lolli" tilewidth="32" tileheight="32" tilecount="2500" columns="50">
-  <image source="../Lolli.png" width="1600" height="1600"/>
+  <image source="../../game/assets/Lolli.png" width="1600" height="1600"/>
  </tileset>
  <layer id="1" name="ground" width="30" height="20">
   <data encoding="csv">
