@@ -20,7 +20,7 @@ class sceneChocolate extends Phaser.Scene {
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Choco");
         // chargement du jeu de tuiles
-        this.tileset = this.carteDuNiveau.addTilesetImage("Choco", "Phaser_tuilesdejeu");
+        this.tileset = this.carteDuNiveau.addTilesetImage("Choco", "Phaser_tuilesdejeu5");
 
         // chargement du calque calque_terrain
         this.calque_terrain = this.carteDuNiveau.createLayer("ground", this.tileset);

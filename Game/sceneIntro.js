@@ -7,7 +7,13 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('splash', 'assets/splash.png');//Ecran d'accueil, splash art
         //assets
         this.load.image('door', 'assets/door.png');
-        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });// chargement tuiles de jeu
+        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
+        
+        this.load.image('bai', 'assets/bait.png');
+        this.load.image('trap', 'assets/trap.png');
+        this.load.image('monster_caramel', 'assets/monster_caramel.png');
+        this.load.image('monster_chocolate', 'assets/monster_chocolate.png');
+        this.load.image('monster_lollipop', 'assets/monster_lollipop.png');
         //end assets
 
         

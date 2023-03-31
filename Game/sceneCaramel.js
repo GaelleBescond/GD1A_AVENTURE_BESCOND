@@ -21,7 +21,7 @@ class sceneCaramel extends Phaser.Scene {
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Cara");
         // chargement du jeu de tuiles
-        this.tileset = this.carteDuNiveau.addTilesetImage("Cara", "Phaser_tuilesdejeu");
+        this.tileset = this.carteDuNiveau.addTilesetImage("Cara", "Phaser_tuilesdejeu4");
 
         // chargement du calque calque_terrain
         this.calque_terrain = this.carteDuNiveau.createLayer("ground", this.tileset);

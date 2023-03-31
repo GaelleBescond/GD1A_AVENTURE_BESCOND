@@ -22,6 +22,7 @@ class sceneShop extends Phaser.Scene {
             this.spawn_x = 14 * 32;
             this.spawn_y = 21 * 32;
         }
+
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Shop");
         // chargement du jeu de tuiles
@@ -32,7 +33,7 @@ class sceneShop extends Phaser.Scene {
         // chargement du calque calque_obstacles
         this.calque_obstacles = this.carteDuNiveau.createLayer("obstacles", this.tileset);
         this.calque_obstacles.setCollisionByProperty({ estSolide: true });
-        //loading player
+        // loading player
         this.player = this.physics.add.sprite(this.spawn_x, this.spawn_y, 'perso');
         this.physics.add.collider(this.player, this.calque_obstacles);       
         // chargement du calque calque_lumiere
