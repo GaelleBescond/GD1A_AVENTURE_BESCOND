@@ -11,11 +11,11 @@ class sceneIntro extends Phaser.Scene {
         //end assets
 
         
-        this.load.image("Phaser_tuilesdejeu", "assets/Shop.png");
-        this.load.image("Phaser_tuilesdejeu", "assets/Map.png");
-        this.load.image("Phaser_tuilesdejeu", "assets/Lolli.png");
-        this.load.image("Phaser_tuilesdejeu", "assets/Cara.png");
-        this.load.image("Phaser_tuilesdejeu", "assets/Choco.png");
+        this.load.image("Phaser_tuilesdejeu1", "assets/Shop.png");
+        this.load.image("Phaser_tuilesdejeu2", "assets/Map.png");
+        this.load.image("Phaser_tuilesdejeu3", "assets/Lolli.png");
+        this.load.image("Phaser_tuilesdejeu4", "assets/Cara.png");
+        this.load.image("Phaser_tuilesdejeu5", "assets/Choco.png");
 
         this.load.tilemapTiledJSON("map", "assets/GlobalMap.json");
         this.load.tilemapTiledJSON("Shop", "assets/Shop.json");

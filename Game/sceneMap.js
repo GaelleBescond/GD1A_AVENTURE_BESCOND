@@ -15,6 +15,131 @@ class sceneMap extends Phaser.Scene {
 
 
     create() {
+
+        /* 
+            this.controller = false;
+            this.player_block = false;
+            this.player_beHit = false;
+            this.clignotement = 0;
+            this.trigger_cleanSword = false;
+            this.trigger_shoot = false;
+            this.player_facing = "up";
+            
+            //Création Attaque
+            this.attaque_sword = this.physics.add.staticGroup();
+            this.proj_Bow = this.physics.add.group();
+    
+            //Création Mbob
+            this.mob = this.physics.add.group();
+            this.anims.create({
+                key: 'left_mob',
+                frames: [{ key: 'mob', frame: 3 }],
+                frameRate: 20
+            });
+            this.anims.create({
+                key: 'up_mob',
+                frames: [{ key: 'mob', frame: 0 }],
+                frameRate: 20
+            });
+            this.anims.create({
+                key: 'down_mob',
+                frames: [{ key: 'mob', frame: 2 }],
+                frameRate: 20
+            });
+            this.anims.create({
+                key: 'right_mob',
+                frames: [{ key: 'mob', frame: 1 }],
+                frameRate: 20
+            });
+    
+            //Load Tiled
+            this.cartePlain = this.add.tilemap("rockPlain");
+            this.tileset = this.cartePlain.addTilesetImage(
+                "Tileset_PlaceHolder",
+                "Phaser_tuilesdejeu"
+            );
+    
+            //Load Calque
+            //Mur
+            this.bordure = this.cartePlain.createLayer(
+                "Bordure",
+                this.tileset
+            );
+    
+            this.river = this.cartePlain.createLayer(
+                "River",
+                this.tileset
+            );
+    
+            //Placement Ennemi
+            this.calque_mob = this.cartePlain.getObjectLayer('Ennemi');
+            this.calque_mob.objects.forEach(calque_mob => {
+                this.mob_create = this.physics.add.sprite(calque_mob.x + 16, calque_mob.y + 16, 'mob');
+                this.mob_create.anims.play('down_mob');
+                this.mob.add(this.mob_create)
+            });
+            this.mob.setVelocityY(100);
+    
+            //Placement Monnaie et Soin
+            this.heal = this.physics.add.group();
+            this.calque_TestHeal = this.cartePlain.getObjectLayer('TestSoin');
+            this.calque_TestHeal.objects.forEach(calque_TestHeal => {
+                const POHeal = this.heal.create(calque_TestHeal.x + 16, calque_TestHeal.y + 16, "Soin");
+            });
+    
+            this.money = this.physics.add.group();
+            this.calque_TestMoney = this.cartePlain.getObjectLayer('TestMoney');
+            this.calque_TestMoney.objects.forEach(calque_TestMoney => {
+                const POHeal = this.money.create(calque_TestMoney.x + 16, calque_TestMoney.y + 16, "Monnaie");
+            });
+    
+            //Placement Environnement
+            this.rock = this.physics.add.staticGroup();
+            this.calque_Rock = this.cartePlain.getObjectLayer('Rock');
+            this.calque_Rock.objects.forEach(calque_Rock => {
+                const PORock = this.rock.create(calque_Rock.x + 16, calque_Rock.y + 16, "Rock");
+            });
+    
+            this.rock_2 = this.physics.add.group();
+            this.calque_Rock_2 = this.cartePlain.getObjectLayer('Rock_2');
+            this.calque_Rock_2.objects.forEach(calque_Rock_2 => {
+                const PORock = this.rock_2.create(calque_Rock_2.x + 16, calque_Rock_2.y + 16, "Rock_2").setImmovable(true);
+            });
+    
+            //Bordure Mob
+            this.calque_mob_switch_right = this.cartePlain.createLayer(
+                "Ennemi_Switch_Right",
+                this.tileset
+            );
+    
+            this.calque_mob_switch_left = this.cartePlain.createLayer(
+                "Ennemi_Switch_Left",
+                this.tileset
+            );
+    
+            this.calque_mob_switch_up = this.cartePlain.createLayer(
+                "Ennemi_Switch_Up",
+                this.tileset
+            );
+    
+            this.calque_mob_switch_down = this.cartePlain.createLayer(
+                "Ennemi_Switch_Down",
+                this.tileset
+            );
+    
+            this.calque_mob_switch_down.setVisible(false);
+            this.calque_mob_switch_up.setVisible(false);
+            this.calque_mob_switch_right.setVisible(false);
+            this.calque_mob_switch_left.setVisible(false); 
+            */
+
+
+
+
+
+
+
+
         this.cameraZoom = 0.5;
         this.thoughts = " ";
         //player spawn depending on the previous scene
@@ -33,7 +158,7 @@ class sceneMap extends Phaser.Scene {
         }
 
         this.carteDuNiveau = this.add.tilemap("map"); //load tilemap
-        this.tileset = this.carteDuNiveau.addTilesetImage("Map", "Phaser_tuilesdejeu"); //load tileset
+        this.tileset = this.carteDuNiveau.addTilesetImage("Map", "Phaser_tuilesdejeu2"); //load tileset
         this.calque_terrain = this.carteDuNiveau.createLayer("ground", this.tileset); //load ground calc
         this.calque_obstacles = this.carteDuNiveau.createLayer("obstacles_batiments", this.tileset); //load obstacles calc
         this.calque_obstacles.setCollisionByProperty({ estSolide: true }); //enable collision for obstacles

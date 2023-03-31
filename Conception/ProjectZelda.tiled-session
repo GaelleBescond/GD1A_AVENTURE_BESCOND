@@ -3,12 +3,12 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Map/Shop.tmx",
+    "activeFile": "Map/GlobalMap.tmx",
     "expandedProjectPaths": [
-        "Map/01_Boutique",
-        ".",
         "TestCode",
-        "Map"
+        ".",
+        "Map",
+        "Map/01_Boutique"
     ],
     "fileStates": {
         "": {
@@ -92,11 +92,11 @@
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 0.5,
-            "selectedLayer": 4,
+            "scale": 0.33,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 303,
-                "y": -73
+                "x": 240.90909090909076,
+                "y": -3.0303030303030027
             }
         },
         "Map/Caramel.tmx#Cara": {
@@ -113,11 +113,11 @@
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 0.5,
-            "selectedLayer": 4,
+            "scale": 0.25,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": -17,
-                "y": -68
+                "x": 250,
+                "y": -2448
             }
         },
         "Map/Chocolate.tmx#Choco": {
@@ -133,31 +133,31 @@
         "Map/GlobalMap.tmx": {
             "expandedObjectLayers": [
                 9,
-                10,
-                11,
+                13,
                 12,
-                13
+                11,
+                10
             ],
-            "scale": 0.25,
-            "selectedLayer": 0,
+            "scale": 0.125,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 894,
-                "y": 1488
+                "x": 492,
+                "y": 5056
             }
         },
         "Map/GlobalMap.tmx#Map": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.5,
             "scaleInEditor": 1
         },
         "Map/Lollipop.tmx": {
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 0.75,
-            "selectedLayer": 1,
+            "scale": 0.25,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 541.9999999999999,
-                "y": 251.33333333333331
+                "x": 898,
+                "y": -664
             }
         },
         "Map/Lollipop.tmx#Lolli": {
@@ -168,10 +168,10 @@
         },
         "Map/Shop.tmx": {
             "scale": 0.75,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 553.9999999999999,
-                "y": 258.6666666666667
+                "x": 508.6666666666666,
+                "y": -241.33333333333326
             }
         },
         "Map/Shop.tmx#Map": {
@@ -192,16 +192,17 @@
     "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "Map/Shop.tmx"
+        "Map/Shop.tmx",
+        "Map/GlobalMap.tmx"
     ],
     "project": "ProjectZelda.tiled-project",
     "property.type": "bool",
     "recentFiles": [
         "Map/Shop.tmx",
+        "Map/GlobalMap.tmx",
         "Map/Lollipop.tmx",
         "Map/Chocolate.tmx",
         "Map/Caramel.tmx",
-        "Map/GlobalMap.tmx",
         "Map/01_Boutique/01_Boutique_01.tmx",
         "Map/01_Boutique/01_Boutique.tmx",
         "Map 2.tmx",

@@ -25,7 +25,7 @@ class sceneShop extends Phaser.Scene {
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Shop");
         // chargement du jeu de tuiles
-        this.tileset = this.carteDuNiveau.addTilesetImage("Shop", "Phaser_tuilesdejeu");
+        this.tileset = this.carteDuNiveau.addTilesetImage("Shop", "Phaser_tuilesdejeu1");
 
         // chargement du calque calque_terrain
         this.calque_terrain = this.carteDuNiveau.createLayer("ground", this.tileset);
