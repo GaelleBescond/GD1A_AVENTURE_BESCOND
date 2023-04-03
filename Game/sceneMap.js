@@ -46,38 +46,38 @@ class sceneMap extends Phaser.Scene {
         this.physics.add.collider(this.player, this.calque_obstacles); //allow collision between player and obstales
         this.calque_lumieres = this.carteDuNiveau.createLayer("lights", this.tileset); //load light calc for ambience
         //load shop doors
-        this.porteShop = this.physics.add.group({ key: 'door' });
+        this.porteShop = this.physics.add.staticGroup();
         this.porte_boutique = this.carteDuNiveau.getObjectLayer("porte_boutique");
         this.porte_boutique.objects.forEach(porte_boutique => {
-            this.doorSpawn = this.porteShop.create(porte_boutique.x + 16, porte_boutique.y + 16, "door").body.setAllowGravity(false);
+            this.doorSpawn = this.porteShop.create(porte_boutique.x + 16, porte_boutique.y + 16, "door");
         });
         this.physics.add.overlap(this.porteShop, this.player, this.toShop, null, this);
         //load choc doors
-        this.porteChoc = this.physics.add.group({ key: 'door' });
+        this.porteChoc = this.physics.add.staticGroup();
         this.porte_chocolat = this.carteDuNiveau.getObjectLayer("porte_chocolat");
         this.porte_chocolat.objects.forEach(porte_chocolat => {
-            this.doorSpawn = this.porteChoc.create(porte_chocolat.x + 16, porte_chocolat.y + 16, "door").body.setAllowGravity(false);
+            this.doorSpawn = this.porteChoc.create(porte_chocolat.x + 16, porte_chocolat.y + 16, "door");
         });
         this.physics.add.overlap(this.porteChoc, this.player, this.toChoc, null, this);
         //load caramel doors
-        this.porteCara = this.physics.add.group({ key: 'door' });
+        this.porteCara = this.physics.add.staticGroup();
         this.porte_caramel = this.carteDuNiveau.getObjectLayer("porte_caramel");
         this.porte_caramel.objects.forEach(porte_caramel => {
-            this.doorSpawn = this.porteCara.create(porte_caramel.x + 16, porte_caramel.y + 16, "door").body.setAllowGravity(false);
+            this.doorSpawn = this.porteCara.create(porte_caramel.x + 16, porte_caramel.y + 16, "door");
         });
         this.physics.add.overlap(this.porteCara, this.player, this.toCara, null, this);
         //load lollipop doors
-        this.porteLolli = this.physics.add.group({ key: 'door' });
+        this.porteLolli = this.physics.add.staticGroup();
         this.porte_lollipop = this.carteDuNiveau.getObjectLayer("porte_lollipop");
         this.porte_lollipop.objects.forEach(porte_lollipop => {
-            this.doorSpawn = this.porteLolli.create(porte_lollipop.x + 16, porte_lollipop.y + 16, "door").body.setAllowGravity(false);
+            this.doorSpawn = this.porteLolli.create(porte_lollipop.x + 16, porte_lollipop.y + 16, "door");
         });
         this.physics.add.overlap(this.porteLolli, this.player, this.toLolli, null, this);
         //load blocked doors
-        this.porteBlocked = this.physics.add.group({ key: 'door' });
+        this.porteBlocked = this.physics.add.staticGroup();
         this.porte_blocked = this.carteDuNiveau.getObjectLayer("porte_bloquee");
         this.porte_blocked.objects.forEach(porte_blocked => {
-            this.doorSpawn = this.porteBlocked.create(porte_blocked.x + 16, porte_blocked.y + 16, "door").body.setAllowGravity(false);
+            this.doorSpawn = this.porteBlocked.create(porte_blocked.x + 16, porte_blocked.y + 16, "door");
         });
         this.physics.add.overlap(this.porteBlocked, this.player, this.pathBlocked, null, this)
         //loading ugly UI
@@ -94,7 +94,7 @@ class sceneMap extends Phaser.Scene {
         this.cameras.main.setZoom(this.cameraZoom);
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        
+
 
 
 

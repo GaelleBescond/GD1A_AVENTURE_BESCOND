@@ -9,7 +9,8 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('door', 'assets/door.png');
         this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
         
-        this.load.image('bai', 'assets/bait.png');
+        this.load.image('hp', 'assets/HP.png');
+        this.load.image('bait', 'assets/bait.png');
         this.load.image('trap', 'assets/trap.png');
         this.load.image('monster_caramel', 'assets/monster_caramel.png');
         this.load.image('monster_chocolate', 'assets/monster_chocolate.png');

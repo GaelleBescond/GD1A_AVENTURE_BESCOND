@@ -55,9 +55,7 @@ class sceneShop extends Phaser.Scene {
         // ancrage de la caméra sur le joueur
         this.cameras.main.startFollow(this.player);
 
-        this.porteMap = this.physics.add.group({
-            key: 'door'
-        });
+        this.porteMap = this.physics.add.staticGroup();
         this.porte_map = this.carteDuNiveau.getObjectLayer("porte_boutique");
         this.porte_map.objects.forEach(porte_map => {
             const doorSpawn = this.porteMap.create(porte_map.x + 16, porte_map.y + 16, "door");
