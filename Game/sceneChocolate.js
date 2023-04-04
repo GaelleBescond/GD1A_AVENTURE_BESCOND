@@ -10,6 +10,7 @@ class sceneChocolate extends Phaser.Scene {
         this.player_hp = data.hp;
         this.spawn = data.spawn;
         this.player_max_hp = data.max_hp;
+        this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
     preload() { }
@@ -76,6 +77,7 @@ class sceneChocolate extends Phaser.Scene {
     }
     openDoor(player, door) {
         this.spawn = "chocolate";
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
         this.scene.start("sceneMap", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,

@@ -10,6 +10,8 @@ class sceneLollipop extends Phaser.Scene {
         this.player_hp = data.hp;
         this.spawn = data.spawn;
         this.player_max_hp = data.max_hp;
+
+        this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
     preload() { }
@@ -17,7 +19,7 @@ class sceneLollipop extends Phaser.Scene {
     create() {
         this.spawn_x = -14 * 32;
         this.spawn_y = -36 * 32;
-        this.visionrangeLollipop = 10;
+        this.visionrangeLollipop = 400;
         this.directionX = 400;
         this.directionY = 400;
         this.i_frame = false;
@@ -140,20 +142,29 @@ class sceneLollipop extends Phaser.Scene {
             this.player.setVelocityY(0);
         }
 
-        
+
         //comportement monstre, pas fonctionnel
-        //si détection joueur (d<x), passer au mode fuite
+        //si détection joueur (d<x), passer au mode fuite   
+        /*
+        this.monsterLollipop.children.each(function(monsterLollipop)) {
+            if (this.monsterLollipop.can_move)
+                {
+                    this.physics.moveToObject(this.monsterLollipop, this.player, -400)
+                }
+        }
+        */
         if (Math.abs(this.checkDistance(this.player.x, this.player.y, this.monsterLollipop.x, this.monsterLollipop.y)) <= this.visionRangeLollipop) {
             this.monsterLollipop.modeFuite();
-        } else if{
-            
-        }
+        }/*else if{
+            return
+        }*/
 
 
     }
 
     openDoor() {
         this.spawn = "lollipop";
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
         this.scene.start("sceneMap", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
@@ -202,6 +213,9 @@ class sceneLollipop extends Phaser.Scene {
     obtainHP(player, hp) {
         this.player_hp += 1;
         hp.destroy();
+        if(this.player_hp > this.player_max_hp){
+            this.player_hp = this.player_max_hp;
+        }
         this.scoreHp.setText('Health: ' + this.player_hp);
     }
 
@@ -251,7 +265,7 @@ class sceneLollipop extends Phaser.Scene {
         return Math.atan2(y2 - y1, x2 - x1);
     }
     //Les lollipops doivent fuir trop vite pour le joueur, 
-    //il faut les attraper à l'aide de pièges, en les poussant dedans ou en y mettant des appats
+    //il faut les attraper à l'aide de pièges, en les poussant dedans et/ou en y mettant des appats
     //Pas fonctionnel
     modefuite() {
         if ((Math.abs(this.player.x - this.monsterLollipop.x)) < 8) { // si monsterLollipop est à peu près au même niveau alors il reste sur l'axe
@@ -303,12 +317,13 @@ class sceneLollipop extends Phaser.Scene {
         //si joueur éloigné (d>x), retour au mode idle
 
     }
-
-    modeBait() {
-        //si un appat est dans la zone, le monstre avance vers l'appat, chec la distance comme pour le joueur
-    }
-
-    modeTrapped() {
-        //si un monstre marche sur un piège, il est immobilisé, désactiver le déplacement de l'objet
-    }
+    /*
+        modeBait() {
+            //si un appat est dans la zone, le monstre avance vers l'appat, chec la distance comme pour le joueur
+        }
+    
+        modeTrapped() {
+            //si un monstre marche sur un piège, il est immobilisé, désactiver le déplacement de l'objet
+        }
+        */
 }

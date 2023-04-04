@@ -19,6 +19,9 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('monster_caramel', 'assets/monster_caramel.png');
         this.load.image('monster_chocolate', 'assets/monster_chocolate.png');
         this.load.image('monster_lollipop', 'assets/monster_lollipop.png');
+        this.load.image('resource_caramel', 'assets/resource_caramel.png');
+        this.load.image('resource_chocolate', 'assets/resource_chocolate.png');
+        this.load.image('resource_lollipop', 'assets/resource_lollipop.png');
         //end assets
 
         
@@ -53,6 +56,7 @@ class sceneIntro extends Phaser.Scene {
     update() {
 
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
         if (this.cursors.down.isDown) {
             this.spawn = "intro";
             this.scene.start("sceneShop", {

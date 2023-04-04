@@ -10,6 +10,8 @@ class sceneMap extends Phaser.Scene {
         this.player_hp = data.hp;
         this.spawn = data.spawn;
         this.player_max_hp = data.max_hp;
+        
+this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
     preload() { }
@@ -132,6 +134,7 @@ class sceneMap extends Phaser.Scene {
 
     toShop() {
         this.spawn = "map";
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
         this.scene.start("sceneShop", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
@@ -145,6 +148,7 @@ class sceneMap extends Phaser.Scene {
 
     toChoc() {
         this.spawn = "map";
+        this.cameras.main.fadeOut(1400, 255,255, 255);
         this.scene.start("sceneChocolate", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
@@ -157,6 +161,7 @@ class sceneMap extends Phaser.Scene {
     }
     toCara() {
         this.spawn = "map";
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
         this.scene.start("sceneCaramel", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
@@ -169,6 +174,7 @@ class sceneMap extends Phaser.Scene {
     }
     toLolli() {
         this.spawn = "map";
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
         this.scene.start("sceneLollipop", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
