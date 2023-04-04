@@ -9,7 +9,7 @@ class sceneLollipop extends Phaser.Scene {
         this.resource_berlingot = data.berlin;
         this.player_hp = data.hp;
         this.spawn = data.spawn;
-        this.player_max_hp = max_hp;
+        this.player_max_hp = data.max_hp;
     }
 
     preload() { }
@@ -21,6 +21,8 @@ class sceneLollipop extends Phaser.Scene {
         this.directionX = 400;
         this.directionY = 400;
         this.i_frame = false;
+        this.diagoX = 0;
+        this.diagoY = 0;
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Lolli");
         // chargement du jeu de tuiles
@@ -94,7 +96,7 @@ class sceneLollipop extends Phaser.Scene {
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
         this.physics.add.overlap(this.attaque_sword, this.calque_terrain, this.clean_attaque, null, this);
-        this.physics.add.overlap( this.monsterLollipop,this.attaque_sword, this.killLollipop, null, this);
+        this.physics.add.overlap(this.monsterLollipop, this.attaque_sword, this.killLollipop, null, this);
 
     }
     update() {
@@ -138,11 +140,14 @@ class sceneLollipop extends Phaser.Scene {
             this.player.setVelocityY(0);
         }
 
+        
         //comportement monstre, pas fonctionnel
+        //si détection joueur (d<x), passer au mode fuite
         if (Math.abs(this.checkDistance(this.player.x, this.player.y, this.monsterLollipop.x, this.monsterLollipop.y)) <= this.visionRangeLollipop) {
             this.monsterLollipop.modeFuite();
+        } else if{
+            
         }
-        // enemy.angle : Math.PI, enemy.fov : Math.PI / 4
 
 
     }
@@ -215,12 +220,12 @@ class sceneLollipop extends Phaser.Scene {
         this.negative = Math.random();
         this.max = 50;
         this.min = 100;
-        this.directionX = Math.floor((Math.random() * (this.max - this.min) + this.min)) * this.negative;
         if (this.negative < 0.5) {
             this.negative = 1;
         } else {
             this.negative = -1;
         }
+        this.directionX = Math.floor((Math.random() * (this.max - this.min) + this.min)) * this.negative;
         monsterLollipop.setVelocityX(this.directionX);
 
         this.negative = Math.random();
@@ -231,10 +236,11 @@ class sceneLollipop extends Phaser.Scene {
         }
         this.directionY = Math.floor((Math.random() * (this.max - this.min) + this.min)) * this.negative;
         monsterLollipop.setVelocityY(this.directionY);
+
     }
 
     clean_attaque(attaque) {
-        this.time.delayedCall(50,(attaque)=>{attaque.destroy()},[attaque],this);
+        this.time.delayedCall(50, (attaque) => { attaque.destroy() }, [attaque], this);
     }
 
     checkDistance(x1, y1, x2, y2) { // mesure la distance entre deux éléments
@@ -244,7 +250,7 @@ class sceneLollipop extends Phaser.Scene {
     checkAngle(x1, y1, x2, y2) {
         return Math.atan2(y2 - y1, x2 - x1);
     }
-    //Les lollipops fuient trop vite pour le joueur, 
+    //Les lollipops doivent fuir trop vite pour le joueur, 
     //il faut les attraper à l'aide de pièges, en les poussant dedans ou en y mettant des appats
     //Pas fonctionnel
     modefuite() {
@@ -294,6 +300,15 @@ class sceneLollipop extends Phaser.Scene {
                 this.monsterLollipop.setVelocityY(this.speedmonsterLollipop * 0.7071)
             }
         }
+        //si joueur éloigné (d>x), retour au mode idle
 
+    }
+
+    modeBait() {
+        //si un appat est dans la zone, le monstre avance vers l'appat, chec la distance comme pour le joueur
+    }
+
+    modeTrapped() {
+        //si un monstre marche sur un piège, il est immobilisé, désactiver le déplacement de l'objet
     }
 }

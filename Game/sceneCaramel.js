@@ -9,7 +9,7 @@ class sceneCaramel extends Phaser.Scene {
         this.resource_berlingot = data.berlin;
         this.player_hp = data.hp;
         this.spawn = data.spawn;
-        this.player_max_hp = max_hp;
+        this.player_max_hp = data.max_hp;
     }
 
     preload() { }
