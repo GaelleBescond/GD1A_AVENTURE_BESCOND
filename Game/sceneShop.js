@@ -9,6 +9,7 @@ class sceneShop extends Phaser.Scene {
         this.resource_berlingot = data.berlin;
         this.player_hp = data.hp;
         this.spawn = data.spawn;
+        this.player_max_hp = max_hp;
     }
 
     preload() {
@@ -35,7 +36,7 @@ class sceneShop extends Phaser.Scene {
         this.calque_obstacles.setCollisionByProperty({ estSolide: true });
         // loading player
         this.player = this.physics.add.sprite(this.spawn_x, this.spawn_y, 'perso');
-        this.physics.add.collider(this.player, this.calque_obstacles);       
+        this.physics.add.collider(this.player, this.calque_obstacles);
         // chargement du calque calque_lumiere
         this.calque_lumieres = this.carteDuNiveau.createLayer("lights", this.tileset);
         //loading foreground
@@ -89,7 +90,8 @@ class sceneShop extends Phaser.Scene {
             cara: this.resource_caramel,
             berlin: this.resource_berlingot,
             hp: this.player_hp,
-            spawn: this.spawn
+            spawn: this.spawn,
+            max_hp: this.player_max_hp
         })
     }
 }

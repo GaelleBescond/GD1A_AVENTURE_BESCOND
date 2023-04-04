@@ -9,6 +9,10 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('door', 'assets/door.png');
         this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
         
+        this.load.image('sword_up', 'assets/attaque_joueur_y.png');
+        this.load.image('sword_down', 'assets/attaque_joueur_y.png');
+        this.load.image('sword_left', 'assets/attaque_joueur_x.png');
+        this.load.image('sword_right', 'assets/attaque_joueur_x.png');
         this.load.image('hp', 'assets/HP.png');
         this.load.image('bait', 'assets/bait.png');
         this.load.image('trap', 'assets/trap.png');
@@ -37,6 +41,7 @@ class sceneIntro extends Phaser.Scene {
         this.resource_caramel = 0;
         this.resource_berlingot = 0;
         this.player_hp = 4;
+        this.player_max_hp = 4;
 
         //chargement du background        
         this.add.image(500, 500, "splash");
@@ -55,7 +60,8 @@ class sceneIntro extends Phaser.Scene {
                 cara: this.resource_caramel,
                 berlin: this.resource_berlingot,
                 hp: this.player_hp,
-                spawn: this.spawn
+                spawn: this.spawn,
+                max_hp: this.player_max_hp
             })
         }
 

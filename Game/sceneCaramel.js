@@ -9,6 +9,7 @@ class sceneCaramel extends Phaser.Scene {
         this.resource_berlingot = data.berlin;
         this.player_hp = data.hp;
         this.spawn = data.spawn;
+        this.player_max_hp = max_hp;
     }
 
     preload() { }
@@ -81,7 +82,8 @@ class sceneCaramel extends Phaser.Scene {
             cara: this.resource_caramel,
             berlin: this.resource_berlingot,
             hp: this.player_hp,
-            spawn: this.spawn
+            spawn: this.spawn,
+            max_hp: this.player_max_hp
         })
     }
 

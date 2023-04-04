@@ -9,6 +9,7 @@ class sceneLollipop extends Phaser.Scene {
         this.resource_berlingot = data.berlin;
         this.player_hp = data.hp;
         this.spawn = data.spawn;
+        this.player_max_hp = max_hp;
     }
 
     preload() { }
@@ -19,7 +20,7 @@ class sceneLollipop extends Phaser.Scene {
         this.visionrangeLollipop = 10;
         this.directionX = 400;
         this.directionY = 400;
-        this.trigger_cleanSword = true;
+        this.i_frame = false;
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Lolli");
         // chargement du jeu de tuiles
@@ -43,8 +44,8 @@ class sceneLollipop extends Phaser.Scene {
         //loading ugly UI
         this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreLolli = this.add.text(820, 48, 'Berlingots: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreLolli = this.add.text(820, 48, 'Lollipops: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreHp = this.add.text(16, 16, 'Health: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreMap = this.add.text(500, 32, 'Lollipop factory', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
 
         // ancrage de la caméra sur le joueur
@@ -75,39 +76,51 @@ class sceneLollipop extends Phaser.Scene {
 
         });
 
+        //Prepare heart drops from lollipops
+        this.heart = this.physics.add.group();
+        this.physics.add.overlap(this.player, this.heart, this.obtainHP, null, this);
+
+
         this.physics.add.collider(this.monsterLollipop, this.calque_obstacles);
         this.physics.add.collider(this.monsterLollipop, this.calque_obstacles_monsters);
+
+
+        //Damage player
         this.physics.add.overlap(this.player, this.monsterLollipop, this.damagePlayer, null, this);
-        this.physics.add.overlap(this.player, this.monsterLollipop, this.killLollipop, null, this);
 
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
-        //Création Collision Attaque
-        this.physics.add.overlap(this.attaque_sword, this.bordure, this.clean_attaque, this.if_clean_sword, this);
-        this.physics.add.collider(this.monsterLollipop, this.attaque_sword, this.killLollipop, null, this);
+        this.physics.add.overlap(this.attaque_sword, this.calque_terrain, this.clean_attaque, null, this);
+        this.physics.add.overlap( this.monsterLollipop,this.attaque_sword, this.killLollipop, null, this);
+
     }
     update() {
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-360);
+            this.player_facing = "left";
         }
         else if (this.cursors.right.isDown) {
             this.player.setVelocityX(360);
+            this.player_facing = "right";
         }
         else { this.player.setVelocityX(0); }
 
         if (this.cursors.up.isDown) {
             this.player.setVelocityY(-360);
+            this.player_facing = "up";
         }
         else if (this.cursors.down.isDown) {
             this.player.setVelocityY(360);
+
+            this.player_facing = "down";
         }
         else { this.player.setVelocityY(0); }
 
         //Attaque
-        if (this.cursors.space.isDown && this.unlock_Sword) {
+        if (this.cursors.space.isDown) {
             if (this.player_facing == "up") {
                 this.attaque_sword.create(this.player.x, this.player.y - 32, "sword_up");
             }
@@ -123,7 +136,6 @@ class sceneLollipop extends Phaser.Scene {
             this.player_block = true;
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
-            this.time.delayedCall(500, this.delock_attaque, [], this);
         }
 
         //comportement monstre, pas fonctionnel
@@ -134,6 +146,7 @@ class sceneLollipop extends Phaser.Scene {
 
 
     }
+
     openDoor() {
         this.spawn = "lollipop";
         this.scene.start("sceneMap", {
@@ -141,15 +154,30 @@ class sceneLollipop extends Phaser.Scene {
             cara: this.resource_caramel,
             berlin: this.resource_berlingot,
             hp: this.player_hp,
-            spawn: this.spawn
+            spawn: this.spawn,
+            max_hp: this.player_max_hp
         })
     }
 
     damagePlayer() {
-        this.player_hp -= 1;
+        if (this.i_frame == false) {
+            this.player_hp -= 1;
+            this.scoreHp.setText('Health: ' + this.player_hp);
+            this.i_frame = true;
+            this.player.setTint(0xff0000);
+            this.time.delayedCall(1000, this.invicibilityFrame, [], this)
+        }
     }
 
-    killLollipop(player, monsterLollipop) {
+    invicibilityFrame() {
+        this.player.clearTint();
+        this.i_frame = false;
+    }
+
+
+
+    killLollipop(monsterLollipop) {
+        console.log("truc")
         this.rng = Math.random();
         if (this.rng <= 0.2) {
             this.dropHP(monsterLollipop.x, monsterLollipop.y);
@@ -158,30 +186,28 @@ class sceneLollipop extends Phaser.Scene {
         if (this.rng <= 0.2) {
             this.createLollipopResource(monsterLollipop.x - 10, monsterLollipop.y - 10);
         }
-        //dropLollipop
-        //dropHP;
         //math random => entre 0 et 1
         //this.truc = Math.floor(Math.random()* (max-min)+min)
         monsterLollipop.destroy();
-
     }
 
     dropHP(x, y) {
-        this.heart = this.physics.add.group(x, y, 'hp');
-        this.physics.add.overlap(this.player, this.heart, this.obtainHP, null, this);
+        this.heart.create(x, y, 'hp')
     }
-    obtainHP(player,hp) {
+    obtainHP(player, hp) {
         this.player_hp += 1;
-        this.heart.destroy();
+        hp.destroy();
+        this.scoreHp.setText('Health: ' + this.player_hp);
     }
 
     createLollipopResource(x, y) {
-
+        this.heart.create(x, y, 'resource_lollipop')
     }
 
-    obtainLollipopRessource(monsterLollipop) {
+    obtainLollipopRessource(player, resource) {
         this.resource_berlingot += 1;
-        monsterLollipop.destroy();
+        resource.destroy();
+        this.scoreLolli.setText('Lollipops: ' + this.resource_berlingot);
     }
 
 
@@ -207,6 +233,10 @@ class sceneLollipop extends Phaser.Scene {
         monsterLollipop.setVelocityY(this.directionY);
     }
 
+    clean_attaque(attaque) {
+        this.time.delayedCall(50,(attaque)=>{attaque.destroy()},[attaque],this);
+    }
+
     checkDistance(x1, y1, x2, y2) { // mesure la distance entre deux éléments
         return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
     }
@@ -214,14 +244,9 @@ class sceneLollipop extends Phaser.Scene {
     checkAngle(x1, y1, x2, y2) {
         return Math.atan2(y2 - y1, x2 - x1);
     }
-    //Clean Attaque
-    clean_attaque(attaque) {
-        attaque.disableBody(true, true);
-    }
-    //Delock pour l'attaque
-    delock_attaque() {
-        this.trigger_cleanSword = true;
-    }
+    //Les lollipops fuient trop vite pour le joueur, 
+    //il faut les attraper à l'aide de pièges, en les poussant dedans ou en y mettant des appats
+    //Pas fonctionnel
     modefuite() {
         if ((Math.abs(this.player.x - this.monsterLollipop.x)) < 8) { // si monsterLollipop est à peu près au même niveau alors il reste sur l'axe
             this.diagoX = 0
