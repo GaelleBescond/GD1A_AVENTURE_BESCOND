@@ -18,7 +18,10 @@ class sceneChocolate extends Phaser.Scene {
     create() {
         this.spawn_x = 16 * 32;
         this.spawn_y = 3 * 32;
-
+        this.visionrangeChocolate = 400;
+        this.directionX = 400;
+        this.directionY = 400;
+        this.i_frame = false;
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Choco");
         // chargement du jeu de tuiles
