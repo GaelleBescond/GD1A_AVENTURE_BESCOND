@@ -20,11 +20,7 @@ class sceneLollipop extends Phaser.Scene {
         this.spawn_x = -14 * 32;
         this.spawn_y = -36 * 32;
         this.visionrangeLollipop = 400;
-        this.directionX = 400;
-        this.directionY = 400;
         this.i_frame = false;
-        this.diagoX = 0;
-        this.diagoY = 0;
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Lolli");
         // chargement du jeu de tuiles
@@ -152,13 +148,11 @@ class sceneLollipop extends Phaser.Scene {
                     this.physics.moveToObject(this.monsterLollipop, this.player, -400)
                 }
         }
+        Phaser.Math.Distance.BetweenPoints(player, ufo);
         */
-        if (Math.abs(this.checkDistance(this.player.x, this.player.y, this.monsterLollipop.x, this.monsterLollipop.y)) <= this.visionRangeLollipop) {
+        if (Phaser.Math.Distance.BetweenPoints(this.player, this.monsterLollipop) <= 400) {
             this.monsterLollipop.modeFuite();
-        }/*else if{
-            return
-        }*/
-
+        }
 
     }
 
@@ -211,14 +205,14 @@ class sceneLollipop extends Phaser.Scene {
     obtainHP(player, hp) {
         this.player_hp += 1;
         hp.destroy();
-        if(this.player_hp > this.player_max_hp){
+        if (this.player_hp > this.player_max_hp) {
             this.player_hp = this.player_max_hp;
         }
         this.scoreHp.setText('Health: ' + this.player_hp);
     }
 
     createLollipopResource(x, y) {
-        this.heart.create(x, y, 'resource_lollipop')
+        this.resource_berlingot.create(x, y, 'resource_lollipop')
     }
 
     obtainLollipopRessource(player, resource) {
@@ -266,6 +260,7 @@ class sceneLollipop extends Phaser.Scene {
     //il faut les attraper à l'aide de pièges, en les poussant dedans et/ou en y mettant des appats
     //Pas fonctionnel
     modefuite() {
+        console.log("fuite");
         if ((Math.abs(this.player.x - this.monsterLollipop.x)) < 8) { // si monsterLollipop est à peu près au même niveau alors il reste sur l'axe
             this.diagoX = 0
             this.monsterLollipop.setVelocityX(0)
