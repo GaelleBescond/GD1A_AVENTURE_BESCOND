@@ -4,11 +4,11 @@ class sceneIntro extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('background', 'assets/background.png');//Ecran d'accueil, splash art
         this.load.image('splash', 'assets/splash.png');//Ecran d'accueil, splash art
         //assets
         this.load.image('door', 'assets/door.png');
-        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
-        
+        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });        
         this.load.image('sword_up', 'assets/attaque_joueur_y.png');
         this.load.image('sword_down', 'assets/attaque_joueur_y.png');
         this.load.image('sword_left', 'assets/attaque_joueur_x.png');
@@ -45,19 +45,16 @@ class sceneIntro extends Phaser.Scene {
         this.resource_berlingot = 0;
         this.player_hp = 4;
         this.player_max_hp = 4;
-
         //chargement du background        
-        this.add.image(500, 500, "splash");
-
-        this.Text = this.add.text(16, 64, 'Press Down arrow to begin', { fontSize: '32px', fill: '#FFF' });
-        //affiche un texte à l’écran en attendant le splash art
+        this.add.image(1024/2,720/2, "background");
+        this.add.image(550,400, "splash");
 
     }
     update() {
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.cameras.main.fadeOut(1400, 255, 255, 255);
-        if (this.cursors.down.isDown) {
+        if (this.cursors.space.isDown) {
             this.spawn = "intro";
             this.scene.start("sceneShop", {
                 choc: this.resource_chocolat,

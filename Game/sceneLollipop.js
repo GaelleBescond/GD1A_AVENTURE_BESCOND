@@ -190,8 +190,6 @@ class sceneLollipop extends Phaser.Scene {
         this.i_frame = false;
     }
 
-
-
     killLollipop(monsterLollipop) {
         console.log("truc")
         this.rng = Math.random();
