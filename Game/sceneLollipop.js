@@ -10,7 +10,8 @@ class sceneLollipop extends Phaser.Scene {
         this.player_hp = data.hp;
         this.spawn = data.spawn;
         this.player_max_hp = data.max_hp;
-
+        this.player_can_bait = data.bait;
+        this.player_can_trap = data.trap;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
@@ -21,6 +22,9 @@ class sceneLollipop extends Phaser.Scene {
         this.spawn_y = -36 * 32;
         this.visionrangeLollipop = 400;
         this.i_frame = false;
+        this.baitIsLayed = false;
+        this.trapIsLayed = false;
+        this.isTrapped = false;
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Lolli");
         // chargement du jeu de tuiles
@@ -34,7 +38,6 @@ class sceneLollipop extends Phaser.Scene {
         // chargement du calque calque_obstacles
         this.calque_obstacles = this.carteDuNiveau.createLayer("obstacles", this.tileset);
         this.calque_obstacles.setCollisionByProperty({ estSolide: true });
-
         //loading player
         this.player = this.physics.add.sprite(this.spawn_x, this.spawn_y, 'perso');
         // chargement du calque calque_lumiere
@@ -75,27 +78,39 @@ class sceneLollipop extends Phaser.Scene {
             this.idleMood(lollipopSpawn);
 
         });
-
-        //Prepare heart drops from lollipops
+        /*Code is here and functional, but maybe not needed due to gameplay
+        //Prepare heart drops from lollipops?
         this.heart = this.physics.add.group();
         this.physics.add.overlap(this.player, this.heart, this.obtainHP, null, this);
-
+        //Damage player?
+        this.physics.add.overlap(this.player, this.monsterLollipop, this.damagePlayer, null, this);
+        */
 
         this.physics.add.collider(this.monsterLollipop, this.calque_obstacles);
         this.physics.add.collider(this.monsterLollipop, this.calque_obstacles_monsters);
-
-
-        //Damage player
-        this.physics.add.overlap(this.player, this.monsterLollipop, this.damagePlayer, null, this);
-
-
-        this.cursors = this.input.keyboard.createCursorKeys();
 
         //Création Attaque
         this.attaque_sword = this.physics.add.staticGroup();
         this.physics.add.overlap(this.attaque_sword, this.calque_terrain, this.clean_attaque, null, this);
         this.physics.add.overlap(this.monsterLollipop, this.attaque_sword, this.killLollipop, null, this);
 
+        //Création bait
+        if (this.player_can_bait) {
+            this.scoreMap = this.add.text(32, 820, 'C', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+        }
+
+        //Création trap
+        if (this.player_can_trap) {
+            this.scoreMap = this.add.text(16, 820, 'G', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+        }
+        this.ground_trap = this.physics.add.staticGroup();
+        this.physics.add.overlap(this.monsterLollipop, this.ground_trap, this.modeTrapped, null, this);
+
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+
+        this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
     }
     update() {
         if (this.cursors.left.isDown) {
@@ -138,7 +153,17 @@ class sceneLollipop extends Phaser.Scene {
             this.player.setVelocityY(0);
         }
 
+        //ajouter pose de pièges G
 
+        if (this.keysG.isDown) {
+            this.player.setVelocityX(-360);
+            this.player_facing = "left";
+        }
+        //ajouter pose d'appats C
+        if (this.keysC.isDown) {
+            this.player.setVelocityX(360);
+            this.player_facing = "left";
+        }
         //comportement monstre, pas fonctionnel
         //si détection joueur (d<x), passer au mode fuite   
         /*
@@ -165,10 +190,12 @@ class sceneLollipop extends Phaser.Scene {
             berlin: this.resource_berlingot,
             hp: this.player_hp,
             spawn: this.spawn,
-            max_hp: this.player_max_hp
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
         })
     }
-
+    // make it a stun instead?
     damagePlayer() {
         if (this.i_frame == false) {
             this.player_hp -= 1;
@@ -198,7 +225,7 @@ class sceneLollipop extends Phaser.Scene {
         //this.truc = Math.floor(Math.random()* (max-min)+min)
         monsterLollipop.destroy();
     }
-
+    // bof si le joueur est pas censé mourir (mais cahier des charges)
     dropHP(x, y) {
         this.heart.create(x, y, 'hp')
     }
@@ -212,7 +239,7 @@ class sceneLollipop extends Phaser.Scene {
     }
 
     createLollipopResource(x, y) {
-        this.resource_berlingot.create(x, y, 'resource_lollipop')
+        this.resourceMap.create(x, y, 'resource_lollipop')
     }
 
     obtainLollipopRessource(player, resource) {
@@ -249,13 +276,6 @@ class sceneLollipop extends Phaser.Scene {
         this.time.delayedCall(50, (attaque) => { attaque.destroy() }, [attaque], this);
     }
 
-    checkDistance(x1, y1, x2, y2) { // mesure la distance entre deux éléments
-        return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-    }
-
-    checkAngle(x1, y1, x2, y2) {
-        return Math.atan2(y2 - y1, x2 - x1);
-    }
     //Les lollipops doivent fuir trop vite pour le joueur, 
     //il faut les attraper à l'aide de pièges, en les poussant dedans et/ou en y mettant des appats
     //Pas fonctionnel
@@ -310,13 +330,20 @@ class sceneLollipop extends Phaser.Scene {
         //si joueur éloigné (d>x), retour au mode idle
 
     }
-    /*
-        modeBait() {
-            //si un appat est dans la zone, le monstre avance vers l'appat, chec la distance comme pour le joueur
-        }
-    
-        modeTrapped() {
-            //si un monstre marche sur un piège, il est immobilisé, désactiver le déplacement de l'objet
-        }
-        */
+
+    layTrap() {
+
+    }
+    layBait() {
+
+    }
+
+    modeBait() {
+        //si un appat est dans la zone, le monstre avance vers l'appat, chec la distance comme pour le joueur
+    }
+
+    modeTrapped() {
+        //si un monstre marche sur un piège, il est immobilisé, désactiver le déplacement de l'objet
+    }
+
 }

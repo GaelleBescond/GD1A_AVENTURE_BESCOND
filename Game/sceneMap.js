@@ -10,8 +10,9 @@ class sceneMap extends Phaser.Scene {
         this.player_hp = data.hp;
         this.spawn = data.spawn;
         this.player_max_hp = data.max_hp;
-        
-this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
+        this.player_can_bait = data.bait;
+        this.player_can_trap = data.trap;
+        this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
     preload() { }
@@ -141,21 +142,25 @@ this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur
             berlin: this.resource_berlingot,
             hp: this.player_hp,
             spawn: this.spawn,
-            max_hp: this.player_max_hp
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
         })
 
     }
 
     toChoc() {
         this.spawn = "map";
-        this.cameras.main.fadeOut(1400, 255,255, 255);
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
         this.scene.start("sceneChocolate", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
             berlin: this.resource_berlingot,
             hp: this.player_hp,
             spawn: this.spawn,
-            max_hp: this.player_max_hp
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
         })
 
     }
@@ -168,7 +173,9 @@ this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur
             berlin: this.resource_berlingot,
             hp: this.player_hp,
             spawn: this.spawn,
-            max_hp: this.player_max_hp
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
         })
 
     }
@@ -181,7 +188,9 @@ this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur
             berlin: this.resource_berlingot,
             hp: this.player_hp,
             spawn: this.spawn,
-            max_hp: this.player_max_hp
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
         })
 
     }

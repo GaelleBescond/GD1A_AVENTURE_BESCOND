@@ -10,20 +10,21 @@ class sceneCaramel extends Phaser.Scene {
         this.player_hp = data.hp;
         this.spawn = data.spawn;
         this.player_max_hp = data.max_hp;
+        this.player_can_bait = data.bait;
+        this.player_can_trap = data.trap;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
     preload() { }
 
     create() {
-
         this.spawn_x = 16 * 32;
         this.spawn_y = 3 * 32;
         this.visionrangeCaramel = 400;
-        this.directionX = 400;
-        this.directionY = 400;
         this.i_frame = false;
-
+        this.baitIsLayed = false;
+        this.trapIsLayed = false;
+        this.isTrapped = false;
         // chargement de la carte
         this.carteDuNiveau = this.add.tilemap("Cara");
         // chargement du jeu de tuiles
@@ -142,7 +143,9 @@ class sceneCaramel extends Phaser.Scene {
             berlin: this.resource_berlingot,
             hp: this.player_hp,
             spawn: this.spawn,
-            max_hp: this.player_max_hp
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
         })
     }
 

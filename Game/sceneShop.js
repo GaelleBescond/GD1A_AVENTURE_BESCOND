@@ -10,12 +10,16 @@ class sceneShop extends Phaser.Scene {
         this.player_hp = data.hp;
         this.spawn = data.spawn;
         this.player_max_hp = data.max_hp;
+        this.player_can_bait = data.bait;
+        this.player_can_trap = data.trap;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
     preload() {
     }
 
+    //add: achat de piège
+    //add: achat d'appat
 
     create() {
         this.spawn_x = 15 * 32;
@@ -45,7 +49,7 @@ class sceneShop extends Phaser.Scene {
         //loading diffuse light
         this.calque_diffuse = this.carteDuNiveau.createLayer("diffuse", this.tileset);
 
-        //loading ugly UI
+        //loading ugly UI, l'écriture sera remplacée par des images
         this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreLolli = this.add.text(820, 48, 'Berlingots: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
@@ -93,7 +97,9 @@ class sceneShop extends Phaser.Scene {
             berlin: this.resource_berlingot,
             hp: this.player_hp,
             spawn: this.spawn,
-            max_hp: this.player_max_hp
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
         })
     }
 }

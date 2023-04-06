@@ -8,7 +8,7 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('splash', 'assets/splash.png');//Ecran d'accueil, splash art
         //assets
         this.load.image('door', 'assets/door.png');
-        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });        
+        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
         this.load.image('sword_up', 'assets/attaque_joueur_y.png');
         this.load.image('sword_down', 'assets/attaque_joueur_y.png');
         this.load.image('sword_left', 'assets/attaque_joueur_x.png');
@@ -24,7 +24,7 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('resource_lollipop', 'assets/resource_lollipop.png');
         //end assets
 
-        
+
         this.load.image("Phaser_tuilesdejeu1", "assets/Shop.png");
         this.load.image("Phaser_tuilesdejeu2", "assets/Map.png");
         this.load.image("Phaser_tuilesdejeu3", "assets/Lolli.png");
@@ -45,9 +45,11 @@ class sceneIntro extends Phaser.Scene {
         this.resource_berlingot = 0;
         this.player_hp = 4;
         this.player_max_hp = 4;
+        this.player_can_trap = false;
+        this.player_can_bait = false;
         //chargement du background        
-        this.add.image(1024/2,720/2, "background");
-        this.add.image(550,400, "splash");
+        this.add.image(1024 / 2, 720 / 2, "background");
+        this.add.image(550, 400, "splash");
 
     }
     update() {
@@ -62,7 +64,9 @@ class sceneIntro extends Phaser.Scene {
                 berlin: this.resource_berlingot,
                 hp: this.player_hp,
                 spawn: this.spawn,
-                max_hp: this.player_max_hp
+                max_hp: this.player_max_hp,
+                trap: this.player_can_trap,
+                bait: this.player_can_bait
             })
         }
 
