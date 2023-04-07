@@ -1,6 +1,9 @@
 class sceneShop extends Phaser.Scene {
     constructor() {
-        super("sceneShop");
+        super("sceneShop");        
+        this.quest1done = false;
+        this.quest2done = false;
+        this.quest3done = false;
     }
 
     init(data) {
@@ -18,10 +21,8 @@ class sceneShop extends Phaser.Scene {
     preload() {
     }
 
-    //add: achat de piège
-    //add: achat d'appat
-
     create() {
+        this.resource_berlingot = 10
         this.spawn_x = 15 * 32;
         this.spawn_y = 58 * 32;
         if (this.spawn == "intro") {
@@ -42,6 +43,24 @@ class sceneShop extends Phaser.Scene {
         // loading player
         this.player = this.physics.add.sprite(this.spawn_x, this.spawn_y, 'perso');
         this.physics.add.collider(this.player, this.calque_obstacles);
+        //load npcs
+        this.npc = this.physics.add.staticGroup();
+        this.npc_spawn = this.carteDuNiveau.getObjectLayer("npc");
+        this.npc_spawn.objects.forEach(npc_spawn => {
+            const npcspawn = this.npc.create(npc_spawn.x + 16, npc_spawn.y + 16, "door");
+        });
+        this.physics.add.overlap(this.player, this.calque_obstacles);
+        //load npc dialogs
+
+        this.npc1 = this.physics.add.sprite(4 * 32 + 16, 20 * 32 + 16, 'door');
+        this.physics.add.overlap(this.player, this.npc1, this.quest1, null, this);
+
+        this.npc2 = this.physics.add.sprite(14 * 32 + 16, 20 * 32 + 16, 'door');
+        this.physics.add.overlap(this.player, this.npc2, this.quest2, null, this);
+
+        this.npc3 = this.physics.add.sprite(22 * 32 + 16, 20 * 32 + 16, 'door');
+        this.physics.add.overlap(this.player, this.npc3, this.quest3, null, this);
+
         // chargement du calque calque_lumiere
         this.calque_lumieres = this.carteDuNiveau.createLayer("lights", this.tileset);
         //loading foreground
@@ -52,7 +71,8 @@ class sceneShop extends Phaser.Scene {
         //loading ugly UI, l'écriture sera remplacée par des images
         this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-       
+        this.dialog = this.add.text(1024 / 2, 720 / 2 + 200, " ", { fontSize: '16px', fill: '#FFF', align: 'center' }).setScrollFactor(0);
+
         this.add.image(780, 48, "resource_lollipop");
         this.scoreLolli = this.add.text(820, 48, this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
@@ -92,7 +112,6 @@ class sceneShop extends Phaser.Scene {
     openDoor(player, door) {
         this.spawn = "shop";
         this.cameras.main.fadeOut(1400, 255, 255, 255);
-        console.log("going to map");
         this.scene.start("sceneMap", {
             choc: this.resource_chocolat,
             cara: this.resource_caramel,
@@ -104,4 +123,56 @@ class sceneShop extends Phaser.Scene {
             bait: this.player_can_bait
         })
     }
+
+    quest1() {
+        if (this.quest1done == false) {
+            if (this.resource_caramel >= 5) {
+                this.resource_caramel -= 5
+                this.scoreCara.setText(this.resource_caramel)
+                this.quest1done = true;
+                this.dialog.setText("Here is a trap to catch some chocolates");
+                this.player_can_trap = true;
+            } else {
+                this.dialog.setText("I would like 5 caramel please");
+            }
+        }
+        this.time.delayedCall(1, this.clearThoughts, [], this)
+    }
+
+    quest2() {
+        if (this.quest2done == false) {
+            if (this.resource_chocolat >= 5) {
+                this.resource_chocolat -= 5
+                this.scoreChoc.setText(this.resource_chocolat)
+                this.quest2done = true;
+                this.dialog.setText("Here is a bait to lure some lollipops");
+                this.player_can_bait = true;
+            } else {
+                this.dialog.setText("I would like 5 chocolate please");
+            }
+        }
+        this.time.delayedCall(1, this.clearThoughts, [], this)
+    }
+
+    quest3() {
+        if (this.quest3done == false) {
+            if (this.resource_berlingot >= 5) {
+                this.resource_berlingot -= 5;
+                this.scoreLolli.setText(this.resource_berlingot)
+                this.quest3done = true;
+                this.player_can_trap = true;
+            } else
+                this.dialog.setText("I would like 5 lollipops please");
+        } else {
+            this.dialog.setText("Thank you! This is the end of the game, you can freely roam without fear of client satisfaction now!");
+        }
+        this.time.delayedCall(1, this.clearThoughts, [], this)
+
+    }
+
+    clearThoughts() {
+        this.dialog.setText("");
+
+    }
+
 }

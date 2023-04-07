@@ -13,7 +13,7 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('sword_down', 'assets/attaque_joueur_y.png');
         this.load.image('sword_left', 'assets/attaque_joueur_x.png');
         this.load.image('sword_right', 'assets/attaque_joueur_x.png');
-        this.load.image('hp', 'assets/HP.png'); //passer au sprite
+        //this.load.image('hp', 'assets/HP.png'); //passer au sprite
         this.load.image('bait', 'assets/bait.png');
         this.load.image('trap', 'assets/trap.png');
         this.load.image('monster_caramel', 'assets/monster_caramel.png');
@@ -22,8 +22,8 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('resource_caramel', 'assets/resource_caramel.png');
         this.load.image('resource_chocolate', 'assets/resource_chocolate.png');
         this.load.image('resource_lollipop', 'assets/resource_lollipop.png');
+        this.load.image('npc', 'assets/npc.png');
         //end assets
-
 
         this.load.image("Phaser_tuilesdejeu1", "assets/Shop.png");
         this.load.image("Phaser_tuilesdejeu2", "assets/Map.png");

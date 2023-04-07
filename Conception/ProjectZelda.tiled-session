@@ -92,11 +92,11 @@
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 0.25,
+            "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 502,
-                "y": -924
+                "x": 336.3636363636365,
+                "y": -793.939393939394
             }
         },
         "Map/Caramel.tmx#Cara": {
@@ -116,8 +116,8 @@
             "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 90,
-                "y": -3393.333333333333
+                "x": 511.99999999999994,
+                "y": -2048
             }
         },
         "Map/Chocolate.tmx#Choco": {
@@ -132,17 +132,17 @@
         },
         "Map/GlobalMap.tmx": {
             "expandedObjectLayers": [
+                11,
                 10,
-                13,
-                12,
                 9,
-                11
+                13,
+                12
             ],
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 512,
-                "y": 3070
+                "y": 3072
             }
         },
         "Map/GlobalMap.tmx#Map": {
@@ -159,8 +159,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": -811.3333333333333,
-                "y": -994.6666666666665
+                "x": 511.99999999999994,
+                "y": -768
             }
         },
         "Map/Lollipop.tmx#Lolli": {
@@ -174,7 +174,7 @@
             "selectedLayer": 3,
             "viewCenter": {
                 "x": 480,
-                "y": 959.5
+                "y": 959
             }
         },
         "Map/Shop.tmx#Map": {

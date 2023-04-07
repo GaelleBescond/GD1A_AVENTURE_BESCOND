@@ -24,7 +24,7 @@ class sceneMap extends Phaser.Scene {
         this.net_strike = this.physics.add.staticGroup();
 
 
-        this.cameraZoom = 0.5;
+        this.cameraZoom = 1;
         this.thoughts = " ";
         //player spawn depending on the previous scene
         if (this.spawn == "shop") {

@@ -74,14 +74,6 @@ class sceneCaramel extends Phaser.Scene {
 
         });
 
-        //Prepare heart drops from lollipops
-        this.heart = this.physics.add.group();
-        this.physics.add.overlap(this.player, this.heart, this.obtainHP, null, this);
-
-        this.physics.add.collider(this.monsterCaramel, this.calque_obstacles);
-        this.physics.add.collider(this.monsterCaramel, this.calque_obstacles_monsters);
-
-
         //Damage player
         this.physics.add.overlap(this.player, this.monsterCaramel, this.damagePlayer, null, this);
 
