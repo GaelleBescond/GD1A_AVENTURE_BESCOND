@@ -52,7 +52,9 @@ class sceneShop extends Phaser.Scene {
         //loading ugly UI, l'écriture sera remplacée par des images
         this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreLolli = this.add.text(820, 48, 'Berlingots: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+       
+        this.add.image(780, 48, "resource_lollipop");
+        this.scoreLolli = this.add.text(820, 48, this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreMap = this.add.text(500, 32, 'Shop', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
 

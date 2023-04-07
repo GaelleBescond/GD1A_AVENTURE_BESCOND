@@ -18,8 +18,8 @@ class sceneCaramel extends Phaser.Scene {
     preload() { }
 
     create() {
-        this.spawn_x = 16 * 32;
-        this.spawn_y = 3 * 32;
+        this.spawn_x = 2 * 32;
+        this.spawn_y = -43 * 32;
         this.visionrangeCaramel = 400;
         this.i_frame = false;
         this.baitIsLayed = false;

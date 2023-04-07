@@ -13,7 +13,7 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('sword_down', 'assets/attaque_joueur_y.png');
         this.load.image('sword_left', 'assets/attaque_joueur_x.png');
         this.load.image('sword_right', 'assets/attaque_joueur_x.png');
-        this.load.image('hp', 'assets/HP.png');
+        this.load.image('hp', 'assets/HP.png'); //passer au sprite
         this.load.image('bait', 'assets/bait.png');
         this.load.image('trap', 'assets/trap.png');
         this.load.image('monster_caramel', 'assets/monster_caramel.png');
