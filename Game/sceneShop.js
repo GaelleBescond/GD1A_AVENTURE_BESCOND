@@ -22,12 +22,11 @@ class sceneShop extends Phaser.Scene {
     }
 
     create() {
-        this.resource_berlingot = 10
         this.spawn_x = 15 * 32;
         this.spawn_y = 58 * 32;
         if (this.spawn == "intro") {
-            this.spawn_x = 14 * 32;
-            this.spawn_y = 21 * 32;
+            this.spawn_x = 2 * 32;
+            this.spawn_y = 22 * 32;
         }
 
         // chargement de la carte
@@ -69,14 +68,15 @@ class sceneShop extends Phaser.Scene {
         this.calque_diffuse = this.carteDuNiveau.createLayer("diffuse", this.tileset);
 
         //loading ugly UI, l'écriture sera remplacée par des images
-        this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.dialog = this.add.text(1024 / 2, 720 / 2 + 200, " ", { fontSize: '16px', fill: '#FFF', align: 'center' }).setScrollFactor(0);
+        this.scoreChoc = this.add.text(820, 16, this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
 
-        this.add.image(780, 48, "resource_lollipop");
+        this.scoreCara = this.add.text(820, 32, this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+
+        this.add.image(0, 0 , "resource_lollipop");
         this.scoreLolli = this.add.text(820, 48, this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreMap = this.add.text(500, 32, 'Shop', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreMap = this.add.text(500, 32, 'Shop', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);        
+        this.dialog = this.add.text(1024 / 2, 720 / 2 + 200, " ", { fontSize: '16px', fill: '#FFF', align: 'center' }).setScrollFactor(0);
 
         //  ajout du champs de la caméra de taille identique à celle du monde
         this.cameras.main.setBounds(0, 0, 30 * 32, 60 * 32);
@@ -135,6 +135,9 @@ class sceneShop extends Phaser.Scene {
             } else {
                 this.dialog.setText("I would like 5 caramel please");
             }
+        }else{
+            this.dialog.setText("Thanks for the caramel!");
+
         }
         this.time.delayedCall(1, this.clearThoughts, [], this)
     }
@@ -150,6 +153,9 @@ class sceneShop extends Phaser.Scene {
             } else {
                 this.dialog.setText("I would like 5 chocolate please");
             }
+        }else{
+            this.dialog.setText("Thanks for the chocolate!");
+
         }
         this.time.delayedCall(1, this.clearThoughts, [], this)
     }

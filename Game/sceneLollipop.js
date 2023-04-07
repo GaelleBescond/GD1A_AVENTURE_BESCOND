@@ -110,27 +110,25 @@ class sceneLollipop extends Phaser.Scene {
                 this.ground_trap = this.physics.add.staticGroup();
                 this.physics.add.overlap(this.monsterLollipop, this.ground_trap, this.modeTrapped, null, this);
             }
-
-
             this.cursors = this.input.keyboard.createCursorKeys();
         }
     }
     update() {
-        //check if player is stunned
+        //check if player is stunned in order to act
         if (this.player_can_move) {
             //ajouter pose de pièges G
             if (this.keyG.isDown && (this.trapIsLayed == false)) {
                 this.ground_bait.create(this.player.x, this.player.y, "trap");
-                this.trapIsLayed == true;
-                this.time.delayedCall(10000, this.delayTrap, [], this)
+                this.trapIsLayed = true;
+                this.time.delayedCall(5000, this.delayTrap, [], this)
             }
             //ajouter pose d'appats C
             if (this.keyC.isDown && (this.baitIsLayed == false)) {
                 this.ground_bait.create(this.player.x, this.player.y, "bait");
-                this.baitIsLayed == true;
-                this.time.delayedCall(10000, this.delayBait, [], this)
+                this.baitIsLayed = true;
+                this.time.delayedCall(5000, this.delayBait, [], this)
             }
-
+            //movements
             if (this.cursors.left.isDown) {
                 this.player.setVelocityX(-360);
                 this.player_facing = "left";
@@ -147,7 +145,6 @@ class sceneLollipop extends Phaser.Scene {
             }
             else if (this.cursors.down.isDown) {
                 this.player.setVelocityY(360);
-
                 this.player_facing = "down";
             }
             else { this.player.setVelocityY(0); }
@@ -173,17 +170,39 @@ class sceneLollipop extends Phaser.Scene {
         } else { this.player.setVelocityY(0); this.player.setVelocityX(0); }
         //comportement monstre, pas fonctionnel
         //si détection joueur (d<x), passer au mode fuite   
-        /*
-        this.monsterLollipop.children.each(function(monsterLollipop)) {
-            if (this.monsterLollipop.can_move)
-                { this.physics.moveToObject(this.monsterLollipop, this.player, -400)  }
-        }
-        Phaser.Math.Distance.BetweenPoints(player, ufo);
-if (Phaser.Math.Distance.BetweenPoints(this.player, this.monsterLollipop) <= 400) {
-    this.monsterLollipop.modeFuite();
-}
-*/
+        this.checkDistance(this.player, this.monsterLollipop);
+
     }
+
+    checkDistance(player, monsterLollipop) {
+        monsterLollipop.children.each(function (monsterLollipop) {
+            this.monsterMaxSpeed = 400;
+            if (Phaser.Math.Distance.Between(player.x, player.y, monsterLollipop.x, monsterLollipop.y) < 100) {
+                if (player.x >= monsterLollipop.x) {
+                    monsterLollipop.setVelocityX(-this.monsterMaxSpeed);
+                } else {
+                    monsterLollipop.setVelocityX(this.monsterMaxSpeed);
+                }
+                if (player.y >= monsterLollipop.y) {
+                    monsterLollipop.setVelocityY(-this.monsterMaxSpeed);
+                } else {
+                    monsterLollipop.setVelocityY(this.monsterMaxSpeed);
+                }
+            }else   if (Phaser.Math.Distance.Between(player.x, player.y, monsterLollipop.x, monsterLollipop.y) < 200) {
+                if (player.x >= monsterLollipop.x) {
+                    monsterLollipop.setVelocityX(-this.monsterMaxSpeed/2);
+                } else {
+                    monsterLollipop.setVelocityX(this.monsterMaxSpeed/2);
+                }
+                if (player.y >= monsterLollipop.y) {
+                    monsterLollipop.setVelocityY(-this.monsterMaxSpeed/2);
+                } else {
+                    monsterLollipop.setVelocityY(this.monsterMaxSpeed/2);
+                }
+            }
+        }, this)
+    }
+
 
     openDoor() {
         this.spawn = "lollipop";
@@ -229,9 +248,8 @@ if (Phaser.Math.Distance.BetweenPoints(this.player, this.monsterLollipop) <= 400
     obtainLollipopRessource(player, resource) {
         this.resource_berlingot += 1;
         resource.destroy();
-        this.scoreLolli.setText('Lollipops: ' + this.resource_berlingot);
+        this.scoreLolli.setText(this.resource_berlingot);
     }
-
 
     idleMood(monsterLollipop) {
         this.negative = Math.random();
@@ -263,63 +281,12 @@ if (Phaser.Math.Distance.BetweenPoints(this.player, this.monsterLollipop) <= 400
     //Les lollipops doivent fuir trop vite pour le joueur, 
     //il faut les attraper à l'aide de pièges, en les poussant dedans et/ou en y mettant des appats
     //Pas fonctionnel
-    modefuite() {
-        console.log("fuite");
-        if ((Math.abs(this.player.x - this.monsterLollipop.x)) < 8) { // si monsterLollipop est à peu près au même niveau alors il reste sur l'axe
-            this.diagoX = 0
-            this.monsterLollipop.setVelocityX(0)
-        }
-
-        else if (this.player.x < this.monsterLollipop.x) { // Position horizontale du joueur
-            this.diagoX = 1;
-            if (this.diagoX + this.diagoY == 1) {
-                this.monsterLollipop.setVelocityX(-this.speedmonsterLollipop)
-            }
-            else {
-                this.monsterLollipop.setVelocityX(-this.speedmonsterLollipop * 0.7071)
-            }
-        }
-        else if (this.player.x > this.monsterLollipop.x) {
-            this.diagoX = 1;
-            if (this.diagoX + this.diagoY == 1) {
-                this.monsterLollipop.setVelocityX(this.speedmonsterLollipop)
-            }
-            else {
-                this.monsterLollipop.setVelocityX(this.speedmonsterLollipop * 0.7071)
-            }
-        }
-
-        if (Math.abs((this.player.y - this.monsterLollipop.y)) < 8) {
-            this.diagoY = 0;
-            this.monsterLollipop.setVelocityY(0)
-        }
-        else if (this.player.y < this.monsterLollipop.y) { // Position verticale du joueur
-            this.diagoY = 1;
-            if (this.diagoX + this.diagoY == 1) {
-                this.monsterLollipop.setVelocityY(-this.speedmonsterLollipop)
-            }
-            else {
-                this.monsterLollipop.setVelocityY(-this.speedmonsterLollipop * 0.7071)
-            }
-        }
-        else if (this.player.y > this.monsterLollipop.y) {
-            this.diagoY = 1;
-            if (this.diagoX + this.diagoY == 1) {
-                this.monsterLollipop.setVelocityY(this.speedmonsterLollipop)
-            }
-            else {
-                this.monsterLollipop.setVelocityY(this.speedmonsterLollipop * 0.7071)
-            }
-        }
-        //si joueur éloigné (d>x), retour au mode idle
-
-    }
 
     delayTrap() {
-        this.trapIsLayed == false;
+        this.trapIsLayed = false;
     }
     delayBait() {
-        this.baitIsLayed == false;
+        this.baitIsLayed = false;
     }
 
     modeBait() {
@@ -327,6 +294,7 @@ if (Phaser.Math.Distance.BetweenPoints(this.player, this.monsterLollipop) <= 400
     }
 
     modeTrapped(monsterLollipop) {
+        console.log("trapped");
         monsterLollipop.setVelocityX(0);
         monsterLollipop.setVelocityY(0);
         //si un monstre marche sur un piège, il est immobilisé, désactiver le déplacement de l'objet
