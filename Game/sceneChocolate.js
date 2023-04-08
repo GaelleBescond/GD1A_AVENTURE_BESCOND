@@ -12,6 +12,9 @@ class sceneChocolate extends Phaser.Scene {
         this.player_max_hp = data.max_hp;
         this.player_can_bait = data.bait;
         this.player_can_trap = data.trap;
+        this.quest1done = data.q1;
+        this.quest2done = data.q2;
+        this.quest3done = data.q3;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
@@ -167,6 +170,15 @@ class sceneChocolate extends Phaser.Scene {
         //si détection joueur (d<x), passer au mode fuite   
         this.checkDistance(this.player, this.monsterChocolate);
 
+        this.timer();
+    }
+
+    timer() {
+        this.player_hp -= 1.5;
+        this.scoreHp.setText(this.player_hp / 100);
+        if (this.player_hp < 0) {
+            this.scene.start("sceneFinal")
+        }
     }
     openDoor(player, door) {
         this.spawn = "chocolate";
@@ -179,7 +191,10 @@ class sceneChocolate extends Phaser.Scene {
             spawn: this.spawn,
             max_hp: this.player_max_hp,
             trap: this.player_can_trap,
-            bait: this.player_can_bait
+            bait: this.player_can_bait,
+            q1: this.quest1done,
+            q2: this.quest2done,
+            q3: this.quest3done
         })
     }
 

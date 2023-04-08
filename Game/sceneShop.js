@@ -1,9 +1,6 @@
 class sceneShop extends Phaser.Scene {
     constructor() {
         super("sceneShop");
-        this.quest1done = false;
-        this.quest2done = false;
-        this.quest3done = false;
     }
 
     init(data) {
@@ -15,6 +12,11 @@ class sceneShop extends Phaser.Scene {
         this.player_max_hp = data.max_hp;
         this.player_can_bait = data.bait;
         this.player_can_trap = data.trap;
+this.quest1done = data.q1;
+this.quest2done =data.q2;
+this.quest3done = data.q3;
+
+
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
@@ -46,7 +48,7 @@ class sceneShop extends Phaser.Scene {
         this.npc = this.physics.add.staticGroup();
         this.npc_spawn = this.carteDuNiveau.getObjectLayer("npc");
         this.npc_spawn.objects.forEach(npc_spawn => {
-            const npcspawn = this.npc.create(npc_spawn.x + 16, npc_spawn.y + 16, "door");
+            const npcspawn = this.npc.create(npc_spawn.x + 16, npc_spawn.y + 16, "npc");
         });
         this.physics.add.overlap(this.player, this.calque_obstacles);
         //load npc dialogs
@@ -75,7 +77,7 @@ class sceneShop extends Phaser.Scene {
 
         this.add.image(16, 56, "hp").setScrollFactor(0);
         this.scoreLolli = this.add.text(820, 48, this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreHp = this.add.text(16, 16, this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.toughts = this.add.text(200, 32, "Shop", { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
 
         //  ajout du champs de la caméra de taille identique à celle du monde
@@ -109,7 +111,21 @@ class sceneShop extends Phaser.Scene {
             this.player.setVelocityY(360);
         }
         else { this.player.setVelocityY(0); }
+
+        if (this.quest1done && this.quest2done && this.quest3done){
+            this.victory();
+        }
+        this.timer();
     }
+
+    timer(){
+        this.player_hp -= 1.5;
+        this.scoreHp.setText(this.player_hp/100);
+        if (this.player_hp<0){
+            this.scene.start("sceneFinal")
+        }
+    }
+
     openDoor(player, door) {
         this.spawn = "shop";
         this.cameras.main.fadeOut(1400, 255, 255, 255);
@@ -121,7 +137,10 @@ class sceneShop extends Phaser.Scene {
             spawn: this.spawn,
             max_hp: this.player_max_hp,
             trap: this.player_can_trap,
-            bait: this.player_can_bait
+            bait: this.player_can_bait,
+            q1: this.quest1done,
+            q2: this.quest2done,
+            q3: this.quest3done
         }), [], this)
         
     }
@@ -172,7 +191,7 @@ class sceneShop extends Phaser.Scene {
             } else
                 this.toughts.setText("I would like 5 lollipops please");
         } else {
-            this.toughts.setText("Thank you! This is the end of the game, you can freely roam without fear of client satisfaction now!");
+            this.toughts.setText("Thank you!");
         }
         this.time.delayedCall(1, this.clearThoughts, [], this)
 
@@ -183,4 +202,17 @@ class sceneShop extends Phaser.Scene {
 
     }
 
+    victory(){
+        this.cameras.main.fadeOut(1400, 255, 255, 255);
+        this.time.delayedCall(1400, this.scene.start("sceneFinal", {
+            choc: this.resource_chocolat,
+            cara: this.resource_caramel,
+            berlin: this.resource_berlingot,
+            hp: this.player_hp,
+            spawn: this.spawn,
+            max_hp: this.player_max_hp,
+            trap: this.player_can_trap,
+            bait: this.player_can_bait
+        }), [], this)
+    }
 }

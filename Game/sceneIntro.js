@@ -24,6 +24,7 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('resource_chocolate', 'assets/resource_chocolate.png');
         this.load.image('resource_lollipop', 'assets/resource_lollipop.png');
         this.load.image('npc', 'assets/npc.png');
+        this.load.image('npc_worker', 'assets/npc_worker.png');
         //end assets
 
         this.load.image("Phaser_tuilesdejeu1", "assets/Shop.png");
@@ -44,13 +45,15 @@ class sceneIntro extends Phaser.Scene {
         this.resource_chocolat = 10;
         this.resource_caramel = 10;
         this.resource_berlingot = 10;
-        this.player_hp = 4;
-        this.player_max_hp = 4;
+        this.player_hp = 60000;
         this.player_can_trap = false;
         this.player_can_bait = false;
         //chargement du background        
         this.add.image(1024 / 2, 720 / 2, "background");
         this.add.image(550, 400, "splash");
+        this.quest1done = false;
+        this.quest2done = false;
+        this.quest3done = false;
 
     }
     update() {
@@ -67,7 +70,10 @@ class sceneIntro extends Phaser.Scene {
                 spawn: this.spawn,
                 max_hp: this.player_max_hp,
                 trap: this.player_can_trap,
-                bait: this.player_can_bait
+                bait: this.player_can_bait,
+                q1: this.quest1done,
+                q2: this.quest2done,
+                q3: this.quest3done
             })
         }
 

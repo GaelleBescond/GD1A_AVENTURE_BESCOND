@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <title>Candy Shop</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
-    <link href="CandyCaitStyle.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -15,18 +14,17 @@
     <script src="sceneChocolate.js"></script>
     <script src="sceneCaramel.js"></script>
     <script src="sceneLollipop.js"></script>
+    <script src="sceneFinal.js"></script>
     <script type="text/javascript">
         var config = {
             type: Phaser.AUTO,
             width: 1024, height: 720,
             physics: {
                 default: 'arcade',
-                arcade: {
-                    debug: true
-                }
+                arcade: { debug: true }
             },
-            pixelArt : true,
-            scene: [sceneIntro, sceneShop, sceneMap, sceneChocolate, sceneCaramel, sceneLollipop]
+            pixelArt: true,
+            scene: [sceneIntro, sceneShop, sceneMap, sceneChocolate, sceneCaramel, sceneLollipop, sceneFinal]
         }
         new Phaser.Game(config);
     </script>

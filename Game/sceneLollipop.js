@@ -12,6 +12,9 @@ class sceneLollipop extends Phaser.Scene {
         this.player_max_hp = data.max_hp;
         this.player_can_bait = data.bait;
         this.player_can_trap = data.trap;
+        this.quest1done = data.q1;
+        this.quest2done = data.q2;
+        this.quest3done = data.q3;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
@@ -95,7 +98,7 @@ class sceneLollipop extends Phaser.Scene {
 
             //Création bait
             if (this.player_can_bait == true) {
-                this.scoreBait = this.add.text(820,32, 'C', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+                this.scoreBait = this.add.text(820, 32, 'C', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
                 this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
                 this.ground_bait = this.physics.add.staticGroup();
             }
@@ -167,8 +170,17 @@ class sceneLollipop extends Phaser.Scene {
         } else { this.player.setVelocityY(0); this.player.setVelocityX(0); }
         //si détection joueur (d<x), passer au mode fuite   
         this.checkDistance(this.player, this.monsterLollipop);
+      
+        this.timer();
     }
 
+    timer(){
+        this.player_hp -= 1.5;
+        this.scoreHp.setText(this.player_hp/100);
+        if (this.player_hp<0){
+            this.scene.start("sceneFinal")
+        }
+    }
     checkDistance(player, monsterLollipop) {
         monsterLollipop.children.each(function (monsterLollipop) {
             this.monsterMaxSpeed = 400;
@@ -210,7 +222,10 @@ class sceneLollipop extends Phaser.Scene {
             spawn: this.spawn,
             max_hp: this.player_max_hp,
             trap: this.player_can_trap,
-            bait: this.player_can_bait
+            bait: this.player_can_bait,
+            q1: this.quest1done,
+            q2: this.quest2done,
+            q3: this.quest3done
         })
     }
     damagePlayer() {

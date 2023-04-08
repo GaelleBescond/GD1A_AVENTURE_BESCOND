@@ -12,6 +12,9 @@ class sceneMap extends Phaser.Scene {
         this.player_max_hp = data.max_hp;
         this.player_can_bait = data.bait;
         this.player_can_trap = data.trap;
+        this.quest1done = data.q1;
+        this.quest2done =data.q2;
+        this.quest3done = data.q3;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
 
@@ -79,6 +82,19 @@ class sceneMap extends Phaser.Scene {
             this.doorSpawn = this.porteBlocked.create(porte_blocked.x + 16, porte_blocked.y + 16, "door");
         });
         this.physics.add.overlap(this.porteBlocked, this.player, this.pathBlocked, null, this)
+
+
+        this.npc1 = this.physics.add.sprite(4 * 32 + 16, 20 * 32 + 16, 'npc_worker');
+        this.physics.add.overlap(this.player, this.npc1, this.quest1, null, this);
+
+        this.npc2 = this.physics.add.sprite(14 * 32 + 16, 20 * 32 + 16, 'npc_worker');
+        this.physics.add.overlap(this.player, this.npc2, this.quest2, null, this);
+
+        this.npc3 = this.physics.add.sprite(22 * 32 + 16, 20 * 32 + 16, 'npc_worker');
+        this.physics.add.overlap(this.player, this.npc3, this.quest3, null, this);
+
+
+
         //loading ugly UI
         this.add.image(1024 / 2, 80 / 2, "ui").setScrollFactor(0);
         this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
@@ -110,8 +126,17 @@ class sceneMap extends Phaser.Scene {
             this.player.setVelocityY(660);
         }
         else { this.player.setVelocityY(0); }
+       
+        this.timer();
     }
 
+    timer(){
+        this.player_hp -= 1.5;
+        this.scoreHp.setText(this.player_hp/100);
+        if (this.player_hp<0){
+            this.scene.start("sceneFinal")
+        }
+    }
     pathBlocked() {
         this.thoughts = "This door is blocked";
         this.scoreThoughts.setText(this.thoughts);
@@ -150,7 +175,10 @@ class sceneMap extends Phaser.Scene {
             spawn: this.spawn,
             max_hp: this.player_max_hp,
             trap: this.player_can_trap,
-            bait: this.player_can_bait
+            bait: this.player_can_bait,
+            q1: this.quest1done,
+            q2: this.quest2done,
+            q3: this.quest3done
         })
 
     }
@@ -165,7 +193,10 @@ class sceneMap extends Phaser.Scene {
             spawn: this.spawn,
             max_hp: this.player_max_hp,
             trap: this.player_can_trap,
-            bait: this.player_can_bait
+            bait: this.player_can_bait,
+            q1: this.quest1done,
+            q2: this.quest2done,
+            q3: this.quest3done
         })
 
     }
@@ -180,7 +211,10 @@ class sceneMap extends Phaser.Scene {
             spawn: this.spawn,
             max_hp: this.player_max_hp,
             trap: this.player_can_trap,
-            bait: this.player_can_bait
+            bait: this.player_can_bait,
+            q1: this.quest1done,
+            q2: this.quest2done,
+            q3: this.quest3done
         })
 
     }

@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Map/Caramel.tmx",
+    "activeFile": "Map/GlobalMap.tmx",
     "expandedProjectPaths": [
-        "Map",
         "Map/01_Boutique",
         ".",
+        "Map",
         "TestCode"
     ],
     "fileStates": {
@@ -119,7 +119,7 @@
             "selectedLayer": 1,
             "viewCenter": {
                 "x": 337.8787878787879,
-                "y": -2590.909090909091
+                "y": -2593.939393939394
             }
         },
         "Map/Chocolate.tmx#Choco": {
@@ -144,8 +144,8 @@
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 512,
-                "y": 3070
+                "x": 558,
+                "y": 580
             }
         },
         "Map/GlobalMap.tmx#Map": {
@@ -208,10 +208,10 @@
     "property.type": "bool",
     "recentFiles": [
         "Map/Shop.tmx",
-        "Map/GlobalMap.tmx",
-        "Map/Chocolate.tmx",
-        "Map/Lollipop.tmx",
         "Map/Caramel.tmx",
+        "Map/Lollipop.tmx",
+        "Map/Chocolate.tmx",
+        "Map/GlobalMap.tmx",
         "Map/01_Boutique/01_Boutique_01.tmx",
         "Map/01_Boutique/01_Boutique.tmx",
         "Map 2.tmx",
