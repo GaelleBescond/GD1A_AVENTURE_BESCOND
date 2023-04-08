@@ -25,16 +25,14 @@ class sceneLollipop extends Phaser.Scene {
         this.baitIsLayed = false;
         this.trapIsLayed = false;
         this.isTrapped = false;
-        this.player_can_bait = true;
-        this.player_can_trap = true;
         this.player_can_move = true;
-        //hide code to reveal vars
+        this.thoughts = "The Lollipop Factory";
+        //hide code to only show vars
         if (true) {
             // chargement de la carte
             this.carteDuNiveau = this.add.tilemap("Lolli");
             // chargement du jeu de tuiles
             this.tileset = this.carteDuNiveau.addTilesetImage("Lolli", "Phaser_tuilesdejeu3");
-
             // chargement du calque calque_terrain
             this.calque_terrain = this.carteDuNiveau.createLayer("ground", this.tileset);
             // chargement du calque calque_obstacles_monsters
@@ -48,13 +46,12 @@ class sceneLollipop extends Phaser.Scene {
             // chargement du calque calque_lumiere
             this.calque_lumieres = this.carteDuNiveau.createLayer("lights", this.tileset);
             this.physics.add.collider(this.player, this.calque_obstacles);
-
             //loading ugly UI
-            this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-            this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-            this.scoreLolli = this.add.text(820, 48, 'Lollipops: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-            this.scoreHp = this.add.text(16, 16, 'Health: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-            this.scoreMap = this.add.text(1024 / 2 - 100, 32, 'Lollipop factory', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+            this.add.image(1024 / 2, 80 / 2, "ui").setScrollFactor(0);
+            this.scoreChoc = this.add.text(820, 16, this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+            this.scoreCara = this.add.text(820, 32, this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+            this.scoreLolli = this.add.text(820, 48, this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+            this.scoreMap = this.add.text(1024 / 2 - 220, 32, this.thoughts, { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
 
             // ancrage de la caméra sur le joueur
             this.cameras.main.startFollow(this.player);
@@ -98,14 +95,14 @@ class sceneLollipop extends Phaser.Scene {
 
             //Création bait
             if (this.player_can_bait == true) {
-                this.scoreBait = this.add.text(32, 820, 'C', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+                this.scoreBait = this.add.text(820,32, 'C', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
                 this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
                 this.ground_bait = this.physics.add.staticGroup();
             }
 
             //Création trap
             if (this.player_can_trap == true) {
-                this.scoreTrap = this.add.text(16, 820, 'G', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+                this.scoreTrap = this.add.text(820, 16, 'G', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
                 this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
                 this.ground_trap = this.physics.add.staticGroup();
                 this.physics.add.overlap(this.monsterLollipop, this.ground_trap, this.modeTrapped, null, this);
@@ -117,13 +114,13 @@ class sceneLollipop extends Phaser.Scene {
         //check if player is stunned in order to act
         if (this.player_can_move) {
             //ajouter pose de pièges G
-            if (this.keyG.isDown && (this.trapIsLayed == false)) {
+            if (this.keyG && (this.trapIsLayed == false)) {
                 this.ground_bait.create(this.player.x, this.player.y, "trap");
                 this.trapIsLayed = true;
                 this.time.delayedCall(5000, this.delayTrap, [], this)
             }
             //ajouter pose d'appats C
-            if (this.keyC.isDown && (this.baitIsLayed == false)) {
+            if (this.keyC && (this.baitIsLayed == false)) {
                 this.ground_bait.create(this.player.x, this.player.y, "bait");
                 this.baitIsLayed = true;
                 this.time.delayedCall(5000, this.delayBait, [], this)
@@ -168,10 +165,8 @@ class sceneLollipop extends Phaser.Scene {
                 this.player.setVelocityY(0);
             }
         } else { this.player.setVelocityY(0); this.player.setVelocityX(0); }
-        //comportement monstre, pas fonctionnel
         //si détection joueur (d<x), passer au mode fuite   
         this.checkDistance(this.player, this.monsterLollipop);
-
     }
 
     checkDistance(player, monsterLollipop) {
@@ -188,16 +183,16 @@ class sceneLollipop extends Phaser.Scene {
                 } else {
                     monsterLollipop.setVelocityY(this.monsterMaxSpeed);
                 }
-            }else   if (Phaser.Math.Distance.Between(player.x, player.y, monsterLollipop.x, monsterLollipop.y) < 200) {
+            } else if (Phaser.Math.Distance.Between(player.x, player.y, monsterLollipop.x, monsterLollipop.y) < 200) {
                 if (player.x >= monsterLollipop.x) {
-                    monsterLollipop.setVelocityX(-this.monsterMaxSpeed/2);
+                    monsterLollipop.setVelocityX(-this.monsterMaxSpeed / 2);
                 } else {
-                    monsterLollipop.setVelocityX(this.monsterMaxSpeed/2);
+                    monsterLollipop.setVelocityX(this.monsterMaxSpeed / 2);
                 }
                 if (player.y >= monsterLollipop.y) {
-                    monsterLollipop.setVelocityY(-this.monsterMaxSpeed/2);
+                    monsterLollipop.setVelocityY(-this.monsterMaxSpeed / 2);
                 } else {
-                    monsterLollipop.setVelocityY(this.monsterMaxSpeed/2);
+                    monsterLollipop.setVelocityY(this.monsterMaxSpeed / 2);
                 }
             }
         }, this)
@@ -225,6 +220,14 @@ class sceneLollipop extends Phaser.Scene {
             this.i_frame = true;
             this.player.setTint(0xff0000);
             this.time.delayedCall(1000, this.invicibilityFrame, [], this)
+            this.rngPos = Math.random();
+            this.rngNeg = Math.random();
+            if (this.rngNeg < 0.5) {
+                this.rngNeg = -1;
+            } else {
+                this.rngNeg = 1
+            }
+            this.player.setPosition(this.player.x + this.rngPos * 32 * this.rngNeg, this.player.y + this.rngPos * 32 * this.rngNeg)
         }
     }
 

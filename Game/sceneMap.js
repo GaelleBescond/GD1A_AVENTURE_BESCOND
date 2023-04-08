@@ -19,13 +19,8 @@ class sceneMap extends Phaser.Scene {
 
 
     create() {
-
-        //Création Attaque
-        this.net_strike = this.physics.add.staticGroup();
-
-
         this.cameraZoom = 1;
-        this.thoughts = " ";
+        this.thoughts = "The Candy Resort";
         //player spawn depending on the previous scene
         if (this.spawn == "shop") {
             this.spawn_x = 460;
@@ -85,24 +80,19 @@ class sceneMap extends Phaser.Scene {
         });
         this.physics.add.overlap(this.porteBlocked, this.player, this.pathBlocked, null, this)
         //loading ugly UI
+        this.add.image(1024 / 2, 80 / 2, "ui").setScrollFactor(0);
         this.scoreChoc = this.add.text(820, 16, 'Chocolats: ' + this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreCara = this.add.text(820, 32, 'Caramels: ' + this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreLolli = this.add.text(820, 48, 'Berlingots: ' + this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
         this.scoreHp = this.add.text(16, 16, 'HP: ' + this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreMap = this.add.text(500, 32, 'World Map', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
-        this.scoreThoughts = this.add.text(16, 64, this.thoughts, { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+        this.scoreThoughts = this.add.text(200, 32, this.thoughts, { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
         //  ajout du champs de la caméra de taille identique à celle du monde
         this.cameras.main.setBounds(-80 * 32, 0, 111 * 32 * 2, 207 * 32);
         // ancrage de la caméra sur le joueur
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setZoom(this.cameraZoom);
         this.cursors = this.input.keyboard.createCursorKeys();
-
-
-
-
-
-
+        this.time.delayedCall(5000, this.clearThoughts, [], this)
     }
     update() {
         if (this.cursors.left.isDown) {

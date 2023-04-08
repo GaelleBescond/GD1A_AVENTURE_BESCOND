@@ -6,6 +6,7 @@ class sceneIntro extends Phaser.Scene {
     preload() {
         this.load.image('background', 'assets/background.png');//Ecran d'accueil, splash art
         this.load.image('splash', 'assets/splash.png');//Ecran d'accueil, splash art
+        this.load.image('ui', 'assets/UI.png');//Interface
         //assets
         this.load.image('door', 'assets/door.png');
         this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
@@ -40,9 +41,9 @@ class sceneIntro extends Phaser.Scene {
 
     create() {
         this.spawn = "";
-        this.resource_chocolat = 0;
-        this.resource_caramel = 0;
-        this.resource_berlingot = 0;
+        this.resource_chocolat = 10;
+        this.resource_caramel = 10;
+        this.resource_berlingot = 10;
         this.player_hp = 4;
         this.player_max_hp = 4;
         this.player_can_trap = false;
