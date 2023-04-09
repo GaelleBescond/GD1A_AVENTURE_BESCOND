@@ -54,6 +54,7 @@ class sceneChocolate extends Phaser.Scene {
             this.scoreChoc = this.add.text(820, 16, this.resource_chocolat, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
             this.scoreCara = this.add.text(820, 32, this.resource_caramel, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
             this.scoreLolli = this.add.text(820, 48, this.resource_berlingot, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
+            this.scoreHp = this.add.text(16, 16, this.player_hp, { fontSize: '16px', fill: '#FFF' }).setScrollFactor(0);
             this.scoreMap = this.add.text(500, 32, this.thoughts, { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
 
 
@@ -96,33 +97,32 @@ class sceneChocolate extends Phaser.Scene {
             this.physics.add.overlap(this.monsterChocolate, this.attaque_sword, this.kill, null, this);
 
             //Création bait
-            if (this.player_can_bait == true) {
-                this.scoreBait = this.add.text(820, 32, 'C', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
-                this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+                this.scoreBait = this.add.text(820, 32, 'H', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+                this.keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
                 this.ground_bait = this.physics.add.staticGroup();
-            }
 
             //Création trap
-            if (this.player_can_trap == true) {
                 this.scoreTrap = this.add.text(820, 16, 'G', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
                 this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
                 this.ground_trap = this.physics.add.staticGroup();
                 this.physics.add.overlap(this.monsterChocolate, this.ground_trap, this.modeTrapped, null, this);
-            }
+
             this.cursors = this.input.keyboard.createCursorKeys();
         }
     }
     update() {
         //check if player is stunned in order to act
         if (this.player_can_move) {
-            //ajouter pose de pièges G
-            if (this.keyG && (this.trapIsLayed == false)) {
+              //ajouter pose de pièges G
+              if (this.keyG.isDown && (this.trapIsLayed == false) && (this.player_can_trap == true)&& (this.resource_caramel >= 1)) {
+                this.resource_caramel -= 1;
                 this.ground_bait.create(this.player.x, this.player.y, "trap");
                 this.trapIsLayed = true;
                 this.time.delayedCall(5000, this.delayTrap, [], this)
             }
-            //ajouter pose d'appats C
-            if (this.keyC && (this.baitIsLayed == false)) {
+            //ajouter pose d'appats H
+            if (this.keyH && (this.baitIsLayed == false) && (this.player_can_bait == true)&& (this.resource_chocolat >= 1)) {
+                this.resource_chocolat -= 1;
                 this.ground_bait.create(this.player.x, this.player.y, "bait");
                 this.baitIsLayed = true;
                 this.time.delayedCall(5000, this.delayBait, [], this)
@@ -175,9 +175,14 @@ class sceneChocolate extends Phaser.Scene {
 
     timer() {
         this.player_hp -= 1.5;
-        this.scoreHp.setText(this.player_hp / 100);
+        this.scoreHp.setText(Math.floor(this.player_hp/100));
         if (this.player_hp < 0) {
-            this.scene.start("sceneFinal")
+            this.scene.start("sceneFinal", {
+                choc: this.resource_chocolat,
+                cara: this.resource_caramel,
+                berlin: this.resource_berlingot,
+                hp: this.player_hp
+            })
         }
     }
     openDoor(player, door) {
@@ -203,6 +208,17 @@ class sceneChocolate extends Phaser.Scene {
             this.monsterMaxSpeed = 400;
             if (Phaser.Math.Distance.Between(player.x, player.y, monster.x, monster.y) < 100) {
                 if (player.x >= monster.x) {
+                    monster.setVelocityX(-this.monsterMaxSpeed / 4);
+                } else {
+                    monster.setVelocityX(this.monsterMaxSpeed / 4);
+                }
+                if (player.y >= monster.y) {
+                    monster.setVelocityY(-this.monsterMaxSpeed / 4);
+                } else {
+                    monster.setVelocityY(this.monsterMaxSpeed / 4);
+                }
+            } else if (Phaser.Math.Distance.Between(player.x, player.y, monster.x, monster.y) < 200) {
+                if (player.x >= monster.x) {
                     monster.setVelocityX(-this.monsterMaxSpeed);
                 } else {
                     monster.setVelocityX(this.monsterMaxSpeed);
@@ -211,17 +227,6 @@ class sceneChocolate extends Phaser.Scene {
                     monster.setVelocityY(-this.monsterMaxSpeed);
                 } else {
                     monster.setVelocityY(this.monsterMaxSpeed);
-                }
-            } else if (Phaser.Math.Distance.Between(player.x, player.y, monster.x, monster.y) < 200) {
-                if (player.x >= monster.x) {
-                    monster.setVelocityX(-this.monsterMaxSpeed / 2);
-                } else {
-                    monster.setVelocityX(this.monsterMaxSpeed / 2);
-                }
-                if (player.y >= monster.y) {
-                    monster.setVelocityY(-this.monsterMaxSpeed / 2);
-                } else {
-                    monster.setVelocityY(this.monsterMaxSpeed / 2);
                 }
             }
         }, this)

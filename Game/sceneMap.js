@@ -13,7 +13,7 @@ class sceneMap extends Phaser.Scene {
         this.player_can_bait = data.bait;
         this.player_can_trap = data.trap;
         this.quest1done = data.q1;
-        this.quest2done =data.q2;
+        this.quest2done = data.q2;
         this.quest3done = data.q3;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
@@ -126,15 +126,20 @@ class sceneMap extends Phaser.Scene {
             this.player.setVelocityY(660);
         }
         else { this.player.setVelocityY(0); }
-       
+
         this.timer();
     }
 
-    timer(){
+    timer() {
         this.player_hp -= 1.5;
-        this.scoreHp.setText(this.player_hp/100);
-        if (this.player_hp<0){
-            this.scene.start("sceneFinal")
+        this.scoreHp.setText(Math.floor(this.player_hp/100));
+        if (this.player_hp < 0) {
+            this.scene.start("sceneFinal", {
+                choc: this.resource_chocolat,
+                cara: this.resource_caramel,
+                berlin: this.resource_berlingot,
+                hp: this.player_hp
+            })
         }
     }
     pathBlocked() {

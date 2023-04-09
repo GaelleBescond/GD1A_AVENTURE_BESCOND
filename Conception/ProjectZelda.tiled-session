@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Map/GlobalMap.tmx",
+    "activeFile": "Map/Lollipop.tmx",
     "expandedProjectPaths": [
         "Map/01_Boutique",
-        ".",
         "Map",
+        ".",
         "TestCode"
     ],
     "fileStates": {
@@ -90,14 +90,14 @@
         },
         "Map/Caramel.tmx": {
             "expandedObjectLayers": [
-                5,
-                6
+                6,
+                5
             ],
             "scale": 0.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 91,
-                "y": -922
+                "x": 512,
+                "y": 1
             }
         },
         "Map/Caramel.tmx#Cara": {
@@ -136,16 +136,16 @@
         "Map/GlobalMap.tmx": {
             "expandedObjectLayers": [
                 13,
+                12,
                 9,
-                10,
                 11,
-                12
+                10
             ],
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 558,
-                "y": 580
+                "y": 3220
             }
         },
         "Map/GlobalMap.tmx#Map": {
@@ -154,16 +154,16 @@
         },
         "Map/Lollipop.tmx": {
             "expandedObjectLayers": [
-                4,
-                5,
+                9,
                 8,
-                9
+                5,
+                4
             ],
-            "scale": 0.75,
-            "selectedLayer": 1,
+            "scale": 0.33,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 512.6666666666665,
-                "y": -768
+                "x": -383.33333333333326,
+                "y": -1003.030303030303
             }
         },
         "Map/Lollipop.tmx#Lolli": {
@@ -208,10 +208,10 @@
     "property.type": "bool",
     "recentFiles": [
         "Map/Shop.tmx",
+        "Map/GlobalMap.tmx",
+        "Map/Chocolate.tmx",
         "Map/Caramel.tmx",
         "Map/Lollipop.tmx",
-        "Map/Chocolate.tmx",
-        "Map/GlobalMap.tmx",
         "Map/01_Boutique/01_Boutique_01.tmx",
         "Map/01_Boutique/01_Boutique.tmx",
         "Map 2.tmx",

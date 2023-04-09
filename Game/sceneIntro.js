@@ -4,12 +4,11 @@ class sceneIntro extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'assets/background.png');//Ecran d'accueil, splash art
         this.load.image('splash', 'assets/splash.png');//Ecran d'accueil, splash art
         this.load.image('ui', 'assets/UI.png');//Interface
         //assets
         this.load.image('door', 'assets/door.png');
-        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 32, frameHeight: 48 });
+        this.load.spritesheet('perso', 'assets/perso.png', { frameWidth: 30, frameHeight: 49 });
         this.load.image('sword_up', 'assets/attaque_joueur_y.png');
         this.load.image('sword_down', 'assets/attaque_joueur_y.png');
         this.load.image('sword_left', 'assets/attaque_joueur_x.png');
@@ -23,7 +22,7 @@ class sceneIntro extends Phaser.Scene {
         this.load.image('resource_caramel', 'assets/resource_caramel.png');
         this.load.image('resource_chocolate', 'assets/resource_chocolate.png');
         this.load.image('resource_lollipop', 'assets/resource_lollipop.png');
-        this.load.image('npc', 'assets/npc.png');
+        this.load.spritesheet('npc', 'assets/npc.png',{ frameWidth: 28, frameHeight: 47 });
         this.load.image('npc_worker', 'assets/npc_worker.png');
         //end assets
 
@@ -32,7 +31,6 @@ class sceneIntro extends Phaser.Scene {
         this.load.image("Phaser_tuilesdejeu3", "assets/Lolli.png");
         this.load.image("Phaser_tuilesdejeu4", "assets/Cara.png");
         this.load.image("Phaser_tuilesdejeu5", "assets/Choco.png");
-
         this.load.tilemapTiledJSON("map", "assets/GlobalMap.json");
         this.load.tilemapTiledJSON("Shop", "assets/Shop.json");
         this.load.tilemapTiledJSON("Cara", "assets/Caramel.json");
@@ -42,15 +40,13 @@ class sceneIntro extends Phaser.Scene {
 
     create() {
         this.spawn = "";
-        this.resource_chocolat = 10;
-        this.resource_caramel = 10;
-        this.resource_berlingot = 10;
+        this.resource_chocolat = 0;
+        this.resource_caramel = 0;
+        this.resource_berlingot = 0;
         this.player_hp = 60000;
         this.player_can_trap = false;
-        this.player_can_bait = false;
-        //chargement du background        
-        this.add.image(1024 / 2, 720 / 2, "background");
-        this.add.image(550, 400, "splash");
+        this.player_can_bait = false;   
+        this.add.image(1024/2, 720/2, "splash");
         this.quest1done = false;
         this.quest2done = false;
         this.quest3done = false;

@@ -13,7 +13,7 @@ class sceneCaramel extends Phaser.Scene {
         this.player_can_bait = data.bait;
         this.player_can_trap = data.trap;
         this.quest1done = data.q1;
-        this.quest2done =data.q2;
+        this.quest2done = data.q2;
         this.quest3done = data.q3;
         this.cameras.main.fadeIn(600, 255, 255, 255); // durée du degradé, puis valeur RVB
     }
@@ -96,19 +96,16 @@ class sceneCaramel extends Phaser.Scene {
             this.physics.add.overlap(this.monsterCaramel, this.attaque_sword, this.killMonster, null, this);
 
             //Création bait
-            if (this.player_can_bait == true) {
-                this.scoreBait = this.add.text(820, 32, 'C', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
-                this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
-                this.ground_bait = this.physics.add.staticGroup();
-            }
+            this.scoreBait = this.add.text(820, 32, 'H', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+            this.keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+            this.ground_bait = this.physics.add.staticGroup();
 
             //Création trap
-            if (this.player_can_trap == true) {
-                this.scoreTrap = this.add.text(820, 16, 'G', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
-                this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
-                this.ground_trap = this.physics.add.staticGroup();
-                this.physics.add.overlap(this.monsterCaramel, this.ground_trap, this.modeTrapped, null, this);
-            }
+            this.scoreTrap = this.add.text(820, 16, 'G', { fontSize: '32px', fill: '#FFF' }).setScrollFactor(0);
+            this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
+            this.ground_trap = this.physics.add.staticGroup();
+            this.physics.add.overlap(this.monsterCaramel, this.ground_trap, this.modeTrapped, null, this);
+
             this.cursors = this.input.keyboard.createCursorKeys();
         }
     }
@@ -116,13 +113,15 @@ class sceneCaramel extends Phaser.Scene {
         //check if player is stunned in order to act
         if (this.player_can_move) {
             //ajouter pose de pièges G
-            if (this.keyG && (this.trapIsLayed == false)) {
+            if (this.keyG.isDown && (this.trapIsLayed == false) && (this.player_can_trap == true)&& (this.resource_caramel >= 1)) {
+                this.resource_caramel -= 1;
                 this.ground_bait.create(this.player.x, this.player.y, "trap");
                 this.trapIsLayed = true;
                 this.time.delayedCall(5000, this.delayTrap, [], this)
             }
-            //ajouter pose d'appats C
-            if (this.keyC && (this.baitIsLayed == false)) {
+            //ajouter pose d'appats H
+            if (this.keyH && (this.baitIsLayed == false) && (this.player_can_bait == true)&& (this.resource_chocolat >= 1)) {
+                this.resource_chocolat -= 1;
                 this.ground_bait.create(this.player.x, this.player.y, "bait");
                 this.baitIsLayed = true;
                 this.time.delayedCall(5000, this.delayBait, [], this)
@@ -169,15 +168,20 @@ class sceneCaramel extends Phaser.Scene {
         } else { this.player.setVelocityY(0); this.player.setVelocityX(0); }
         //si détection joueur (d<x), passer au mode fuite   
         this.checkDistance(this.player, this.monsterCaramel);
-     
+
         this.timer();
     }
 
-    timer(){
+    timer() {
         this.player_hp -= 1.5;
-        this.scoreHp.setText(this.player_hp/100);
-        if (this.player_hp<0){
-            this.scene.start("sceneFinal")
+        this.scoreHp.setText(Math.floor(this.player_hp / 100));
+        if (this.player_hp < 0) {
+            this.scene.start("sceneFinal", {
+                choc: this.resource_chocolat,
+                cara: this.resource_caramel,
+                berlin: this.resource_berlingot,
+                hp: this.player_hp
+            })
         }
     }
     openDoor(player, door) {
@@ -200,28 +204,17 @@ class sceneCaramel extends Phaser.Scene {
 
     checkDistance(player, monster) {
         monster.children.each(function (monster) {
-            this.monsterMaxSpeed = 400;
-            if (Phaser.Math.Distance.Between(player.x, player.y, monster.x, monster.y) < 100) {
+            this.monsterMaxSpeed = 50;
+            if (Phaser.Math.Distance.Between(player.x, player.y, monster.x, monster.y) < 1000) {
                 if (player.x >= monster.x) {
-                    monster.setVelocityX(-this.monsterMaxSpeed);
-                } else {
                     monster.setVelocityX(this.monsterMaxSpeed);
+                } else {
+                    monster.setVelocityX(-this.monsterMaxSpeed);
                 }
                 if (player.y >= monster.y) {
-                    monster.setVelocityY(-this.monsterMaxSpeed);
-                } else {
                     monster.setVelocityY(this.monsterMaxSpeed);
-                }
-            } else if (Phaser.Math.Distance.Between(player.x, player.y, monster.x, monster.y) < 200) {
-                if (player.x >= monster.x) {
-                    monster.setVelocityX(-this.monsterMaxSpeed / 2);
                 } else {
-                    monster.setVelocityX(this.monsterMaxSpeed / 2);
-                }
-                if (player.y >= monster.y) {
-                    monster.setVelocityY(-this.monsterMaxSpeed / 2);
-                } else {
-                    monster.setVelocityY(this.monsterMaxSpeed / 2);
+                    monster.setVelocityY(-this.monsterMaxSpeed);
                 }
             }
         }, this)
